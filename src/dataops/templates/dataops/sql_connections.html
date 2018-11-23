@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load ontask_tags %}
+{% load static %}
+{% load django_tables2 %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block title %}{{ block.super }}{% trans 'SQL Connections' %}{% endblock %}
+{% block extrahead %}
+  {% ontask_datatables_bootstrap_css %}
+{% endblock extrahead %}
+{% block scripts %}
+  <script src="{% static 'dataops/js/dataops.js' %}?v={% ontask_version %}"></script>
+  {% ontask_datatables_jquery_js %}
+  {% ontask_datatables_bootstrap_js %}
+  <script type="text/javascript">
+    if (document.getElementById("sqlconn-table") != null) {
+      // Required for DataTables
+      $(document).ready(function() {
+        $('#sqlconn-table').DataTable({
+          "stateSave": true,
+          "order": [],
+          "language": {
+              "emptyTable": "{% trans 'No sql connections available.' %}",
+              "url": getLanguage()
+          },
+          "columnDefs": [
+              {"className": "dt-center", "targets": "_all"},
+              {"orderable": false, "targets": 10},
+              {"searchable": false, "targets": 10},
+          ],
+        });
+      });
+    }
+  </script>
+{% endblock %}
+{% block container %}
+<div class="container-fluid text-center">
+  <h1 class="page-header">{% trans 'SQL Connections' %}</h1>
+  <div style="display: inline-block;" id="sqlconn-area">
+    {% render_table table %}
+  </div>
+  <div class="modal fade" id="modal-item" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock container %}
+
+
+
+

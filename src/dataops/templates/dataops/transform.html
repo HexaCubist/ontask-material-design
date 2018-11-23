@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load ontask_tags %}
+{% load static %}
+{% load django_tables2 %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block title %}{{ block.super }}{% trans 'Transform' %}{% endblock %}
+{% block extrahead %}
+  {% ontask_datatables_bootstrap_css %}
+{% endblock extrahead %}
+{% block scripts %}
+  <script src="{% static 'dataops/js/dataops.js' %}"></script>
+  {% ontask_datatables_jquery_js %}
+  {% ontask_datatables_bootstrap_js %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      if (document.getElementById("transform-table") != null) {
+        $('#transform-table').DataTable({
+          "search": {
+            "caseInsensitive": true,
+          },
+          stateSave: true,
+          "language": {
+            "emptyTable": "{% trans 'No transformations in this workflow.' %}",
+            "url": getLanguage()
+          },
+          "createdRow": function(row, data, dataIndex) {
+              if (data[4] == '<span class="false">✘</span>') {
+                $(row).addClass('danger');
+              }
+          },
+          "columnDefs": [
+              {"className": "dt-center", "targets": "_all"},
+          ],
+        });
+      }
+    });
+  </script>
+{% endblock %}
+{% block container %}
+  <div align="center" class="container">
+    <h1 class="page-header">{% trans 'Transformations' %}</h1>
+    <div class="container-fluid" id="transform-selection">
+      {% render_table table %}
+    </div>
+    <div class="modal fade" id="modal-item" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock container %}

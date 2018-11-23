@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load ontask_tags %}
+{% load static %}
+{% load django_tables2 %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block title %}{{ block.super }}{% trans 'Scheduled operations' %}{% endblock %}
+{% block extrahead %}
+  {% ontask_datatables_bootstrap_css %}
+{% endblock extrahead %}
+{% block scripts %}
+  <script src="{% static 'scheduler/js/scheduler.js' %}?v={% ontask_version %}"></script>
+  {% ontask_datatables_jquery_js %}
+  {% ontask_datatables_bootstrap_js %}
+  <script type="text/javascript">
+    $(document).ready(function() {
+      if (document.getElementById("scheduler-table") != null) {
+        $('#scheduler-table').DataTable({
+          "search": {
+            "caseInsensitive": true,
+          },
+          "language": {
+            "emptyTable": "{% trans 'No scheduled operations in this workflow.' %}",
+            "url": getLanguage()
+          },
+          "columnDefs": [
+              {"className": "dt-center", "targets": "_all"},
+              {"orderable": false, "targets": 0},
+              {"searchable": false, "targets": 0},
+          ],
+        });
+      }
+    });
+  </script>
+{% endblock %}
+{% block container %}
+<div align="center" class="container-fluid">
+  <h1 class="page-header">{% trans 'Scheduled Operations' %}<super>*</super></h1>
+  {% if no_data %}
+    {% include 'workflow/includes/no_data.html' %}
+  {% elif no_actions %}
+    {% include 'workflow/includes/no_actions.html' %}
+  {% endif %}
+  {% render_table table %}
+  {% url 'action:index' as actionindex %}
+  <p class="text-left">{% blocktrans %}<strong><super>*</super></strong>The execution of some of
+    the actions can be scheduled for a time in the future. This page shows those planned executions. To schedule the
+    execution of one action, go to the <a href="{{ actionindex }}">Actions</a> menu and select the operation <i>Schedule
+    </i> for an
+    action.{% endblocktrans %}</p>
+  <div class="modal fade" id="modal-item" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock container %}
+
+
+
+
