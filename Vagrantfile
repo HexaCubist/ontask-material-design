@@ -126,7 +126,8 @@ Vagrant.configure("2") do |config|
     python manage.py makemigrations table action logs scheduler table
     python manage.py migrate
     python manage.py runscript -v1 --traceback initial_data
-    echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@myproject.com', 'admin')" | python manage.py shell
+
+    echo "from django.contrib.auth import get_user_model; User = get_user_model(); u = User.objects.create_user(email='admin@example.com',password='admin'); u.is_superuser = True; u.is_staff = True; u.save()" | python manage.py shell
     cd ../src/
     python manage.py collectstatic --noinput
 
