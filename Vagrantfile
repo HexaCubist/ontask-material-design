@@ -126,18 +126,16 @@ Vagrant.configure("2") do |config|
     python manage.py makemigrations table action logs scheduler table
     python manage.py migrate
     python manage.py runscript -v1 --traceback initial_data
-    echo "admin
-    admin" | python manage.py createsuperuser --name admin --email admin@example.com
+    echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@myproject.com', 'admin')" | python manage.py shell
     cd ../src/
     python manage.py collectstatic --noinput
-    sed -i -e 's/ontask.settings.production/ontask.settings.development/g' manage.py
 
     echo "Running Server... Should become live at http://127.0.0.1:8000 with username admin email admin@localhost and password admin"
     # python manage.py runserver_plus 0.0.0.0:8080
   SHELL
 
   config.trigger.after :up do |trigger|
-    trigger.run_remote = {inline: "cd /srv/ontask/src && screen -dmS OnTask python manage.py runserver_plus 0.0.0.0:8080"}
+    trigger.run_remote = {inline: "cd /srv/ontask/src && screen -dmS OnTask python manage.py runserver_plus 0.0.0.0:8080 --settings=ontask.settings.development"}
   end
 
 end
