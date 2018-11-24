@@ -1,0 +1,23 @@
+{
+  "name": "ontask_material_src",
+  "version": "1.0.0",
+  "description": "Material Design components for use in OnTask",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "material-components-web": "^0.41.1"
+  },
+  "devDependencies": {
+    "css-loader": "^1.0.1",
+    "extract-loader": "^3.0.0",
+    "file-loader": "^2.0.0",
+    "node-sass": "^4.10.0",
+    "sass-loader": "^7.1.0",
+    "webpack": "^3.12.0",
+    "webpack-dev-server": "^2.11.3"
+  }
+}
