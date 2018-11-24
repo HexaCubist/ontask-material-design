@@ -105,3 +105,4 @@ src/celerybeat.pid
 *.box
 
 # End of https://www.gitignore.io/api/vagrant
+src/media/default_profile\.png\.19x19_q85_crop\.png
