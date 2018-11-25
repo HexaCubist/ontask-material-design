@@ -14,6 +14,7 @@ import os
 from os.path import dirname, join, exists
 
 import environ
+import mimetypes
 from celery.schedules import crontab
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -394,3 +395,7 @@ CELERY_BEAT_SCHEDULE = {
         'args': (DEBUG,)
     }
 }
+
+# Correct mimetypes for svg files
+mimetypes.add_type("image/svg+xml", ".svg", True)
+mimetypes.add_type("image/svg+xml", ".svgz", True)

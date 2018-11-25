@@ -23,6 +23,7 @@ import workflow.urls
 from dataops import pandas_db
 from templatetags.ontask_tags import ontask_version
 from . import views
+from . import md_views
 import workflow.views
 
 api_description = ugettext("""The OnTask API offers functionality to manipulate 
@@ -79,6 +80,12 @@ urlpatterns = [
             description=api_description,
             public=False),
         ),
+]
+
+# Material Design versions of pages
+urlpatterns += [
+    # Home Page!
+    url(r'^md/$', md_views.home, name='home'),
 ]
 
 # User-uploaded files like profile pics need to be served in development

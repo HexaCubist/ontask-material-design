@@ -1,3 +1,49 @@
+/* Material Design Theme */
+:root {
+  --mdc-theme-primary: #337ab7;
+  --mdc-theme-secondary: #8fe8d8;
+}
+
+.mdc-theme--primary-bg-dark {
+  background-color: #004e87;
+}
+.mdc-theme--primary-bg-light {
+  background-color: #6ca9ea;
+}
+.mdc-theme--secondary-bg-dark {
+  background-color: #5bb5a3;
+}
+.mdc-theme--secondary-bg-light {
+  background-color: #c0ffff;
+}
+
+.siderail-item {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.siderail-item .item-icon {
+    display: block;
+}
+
+.siderail-item .item-icon img {
+    width: 100%;
+    height: auto;
+}
+
+.siderail-item .item-text {
+  width: 100%;
+  text-align: center;
+  display: block;
+  color: var(--mdc-theme-secondary);
+  opacity: 0;
+  visibility: hidden;
+  position: relative;
+  top: -2em;
+  transition: 0.3s ease top;
+}
+
 
 /*JQuery QueryBuilder Without Bootstrap*/
 .query-builder, .query-builder * {

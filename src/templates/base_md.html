@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load ontask_tags %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% load i18n %}
+<html{% if LANGUAGE_CODE %} lang="{{ LANGUAGE_CODE }}"{% endif %}>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}{% endblock description %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'site/ico/favicon.ico' %}" type="favicon/ico">
+    <title>{% block title %}{% include "_brandname.html" %} :: {% endblock %}</title>
+    <!-- Material Design core  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@0.41.1/dist/material-components-web.min.css">
+    <!-- Custom styles for this site -->
+    {% block styles %}
+    {% endblock styles %}
+    {% ontask_jquery %}
+    <!-- Custom tags for the head tag -->
+    {% block extrahead %}{% endblock extrahead %}
+    <link href="{% static 'site/css/main_md.css' %}" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    {% ontask_shim_respond %}
+  </head>
+  <body style="" class="mdc-theme--primary-bg-dark mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      {% block navbar %}
+        <div class="mdc-layout-grid__cell--span-2 siderail">
+          <a href="#" class="siderail-item ">
+            <span class="item-icon"><img src="{% static "site/img/brand/logo-flat.svg" %}"></span>
+            <span class="item-text">Home</span>
+          </a>
+        </div>
+      {% endblock navbar %}
+      {% block messages %}
+      {% endblock %}
+      {% block container %}
+      {% endblock container %}
+      {% block timeout %}
+      {% endblock timeout %}
+      <script type="text/javascript" src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+      <script src="{% static 'site/js/initial.js' %}?v={% ontask_version %}"></script>
+      <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+      <script src="{% static 'site/js/site_md.js' %}?v={% ontask_version %}"></script>
+      {% block scripts %}
+      {% endblock scripts %}
+      {% if user.is_authenticated %}
+      {% comment %}
+        <script type="text/javascript"
+                src="{% static 'site/js/bootstrap-session-timeout.min.js' %}"></script>
+        <script type="text/javascript">
+          $.sessionTimeout({
+            title: 'OnTask',
+            message: "{% trans 'Your session is about to expire.' %}",
+            logoutButton: "{% trans 'Logout' %}",
+            ignoreUserActivity: true,
+            keepAlive: false,
+            keepAliveButton: "{% trans 'Remain Connected' %}",
+            keepAliveUrl: "{% url 'keep_alive' %}",
+            logoutUrl: "{% url 'accounts:logout' %}",
+            redirUrl: "{% url 'accounts:logout' %}",
+            warnAfter: ({{ ONTASK_TIMEOUT }} - 60) * 1000,
+            redirAfter: {{ ONTASK_TIMEOUT }} * 1000,
+            onStart: false
+          });
+        </script>
+      {% endcomment %}
+      {% endif %}
+    </div>
+  </body>
+</html>
+
+

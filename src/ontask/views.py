@@ -16,7 +16,6 @@ from ontask.tasks import increase_track_count
 from ontask.permissions import is_instructor, is_admin
 from workflow.views import workflow_index
 
-
 def home(request):
     if not request.user.is_authenticated:
         # Unauthenticated request, go to login
