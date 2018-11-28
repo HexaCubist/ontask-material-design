@@ -259,6 +259,7 @@ dt div.btn-group-vertical {
 
 .workflow-card__primary.mdc-card__media {
     padding: 0 2em;
+    color: white;
 }
 
 .siderail-item.logo {
@@ -281,4 +282,8 @@ dt div.btn-group-vertical {
     background: #ffffff40;
     color: white;
     box-shadow: 0 0 0 2px #fff;
+}
+
+.mdc-typography--headline2, .mdc-typography--headline3, .mdc-typography--headline4 {
+    font-family: monospace;
 }
