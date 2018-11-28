@@ -53,19 +53,19 @@
       {% endblock navbar %}
         <main class="mdc-layout-grid mdc-theme--primary-body mdc-elevation--z2">
           <div class="mdc-layout-grid__inner">
-            
+            {% block container %}
+            {% endblock container %}
           </div>
         </main>
       {% block messages %}
       {% endblock %}
-      {% block container %}
-      {% endblock container %}
       {% block timeout %}
       {% endblock timeout %}
       <script type="text/javascript" src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
       <script src="{% static 'site/js/initial.js' %}?v={% ontask_version %}"></script>
       <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
       <script src="{% static 'site/js/site_md.js' %}?v={% ontask_version %}"></script>
+      <script src="{% static 'site/js/randomColor.min.js' %}"></script>
       {% block scripts %}
       {% endblock scripts %}
       {% if user.is_authenticated %}

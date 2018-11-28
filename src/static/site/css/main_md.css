@@ -2,7 +2,7 @@
 :root {
   --mdc-theme-primary: #337ab7;
   --mdc-theme-secondary: #8fe8d8;
-  --right-panel-width: 125px;
+  --right-panel-width: 115px;
 }
 
 .mdc-theme--primary-bg-dark {
@@ -20,6 +20,7 @@
 
 .mdc-theme--primary-body {
   background-color: #337ab7;
+  padding: 1em 5em;
 }
 
 body {
@@ -32,7 +33,7 @@ body {
 .siderail-item {
     display: block;
     width: 100%;
-    height: 100px;
+    height: 70px;
     padding: 0;
     /*transition: 0.3s ease all;*/
     text-decoration: none;
@@ -47,7 +48,7 @@ body {
 }
 
 .siderail-open .siderail-item.mdc-list-item--activated {
-    height: 135px;
+    height: 105px;
     border-right-width: 5px;
 }
 
@@ -62,7 +63,7 @@ body {
 }
 
 .siderail-item .item-icon.material-icons {
-    font-size: 64px;
+    font-size: 34px;
     text-align: center;
     margin: 19px 0;
 }
@@ -254,4 +255,30 @@ dt div.btn-group-vertical {
     height: 100%;
     margin: auto;
     text-align: center;
+}
+
+.workflow-card__primary.mdc-card__media {
+    padding: 0 2em;
+}
+
+.siderail-item.logo {
+    height: 105px;
+}
+
+.section-title {
+    color: white;
+    margin-bottom: 0;
+}
+
+.create-card .align-center {
+}
+
+.create-card {
+    position: relative;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    background: #ffffff40;
+    color: white;
+    box-shadow: 0 0 0 2px #fff;
 }

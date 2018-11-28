@@ -189,7 +189,8 @@ def workflow_index(request):
         'table': WorkflowTable(workflows,
                                id='workflow-table',
                                orderable=False),
-        'nwflows': len(workflows)
+        'nwflows': len(workflows),
+        'workflows': workflows
     }
 
     # Report if Celery is not running properly
