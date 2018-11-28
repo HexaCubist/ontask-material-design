@@ -1,11 +1,31 @@
 // Button Ripples
-mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-ripple-js'));
+// mdc.ripple.MDCRipple.attachTo($('.mdc-ripple-js'));
 // Top App bar Instantiation
-const topAppBarElement = document.querySelector('.mdc-top-app-bar');
-const topAppBar = new MDCTopAppBar(topAppBarElement);
+// const topAppBarElement = document.querySelector('.mdc-top-app-bar');
+// const topAppBar = new MDCTopAppBar(topAppBarElement);
 
 // Auto Init
 window.mdc.autoInit();
+
+// Navigation Effect
+$(function() {
+    $(window).bind("load resize", function() {
+        topOffset = 101;
+        width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
+        if (width < 768) {
+            $('.siderail').removeClass('siderail-open');
+            topOffset = 100; // 2-row-menu
+        } else {
+            $('.siderail').addClass('siderail-open');
+        }
+    });
+
+    var url = window.location;
+    var element = $('a.mdc-list-item').filter(function() {
+        return this.href == url;
+    }).addClass('mdc-list-item--activated');
+});
+
 
 var set_qbuilder = function (element_id, qbuilder_options) {
     var id_formula_value = $(element_id).val();
@@ -133,19 +153,19 @@ var saveForm = function () {
     });
     return false;
 };
-$(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip({
-    trigger: "hover",
-    placement: "auto",
-    container: "body"
-  });
-  $("body").on("click", ".spin", function () {
-    $('#div-spinner').show();
-  });
-});
-$(window).bind("load", function() {
-   $('#div-spinner').hide();
-});
-$(':input').on('invalid', function(e){
-  $('#div-spinner').hide();
-});
+// $(document).ready(function(){
+//   $('[data-toggle="tooltip"]').tooltip({
+//     trigger: "hover",
+//     placement: "auto",
+//     container: "body"
+//   });
+//   $("body").on("click", ".spin", function () {
+//     $('#div-spinner').show();
+//   });
+// });
+// $(window).bind("load", function() {
+//    $('#div-spinner').hide();
+// });
+// $(':input').on('invalid', function(e){
+//   $('#div-spinner').hide();
+// });

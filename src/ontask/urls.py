@@ -86,6 +86,8 @@ urlpatterns = [
 urlpatterns += [
     # Home Page!
     url(r'^md/$', md_views.home, name='home'),
+    url(r'^md/workflows$', md_views.home, name='workflows'),
+    url(r'^md/actions$', md_views.home, name='actions'),
 ]
 
 # User-uploaded files like profile pics need to be served in development

@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Material Icons Outline';
+    src: local('Material-Icons-Outline'),
+        url('Material-Icons-Outline.woff2') format('woff2'),
+        url('Material-Icons-Outline.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.material-icons {
+	font-family: 'Material Icons Outline';
+}

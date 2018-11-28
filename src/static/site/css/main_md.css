@@ -2,6 +2,7 @@
 :root {
   --mdc-theme-primary: #337ab7;
   --mdc-theme-secondary: #8fe8d8;
+  --right-panel-width: 125px;
 }
 
 .mdc-theme--primary-bg-dark {
@@ -17,14 +18,42 @@
   background-color: #c0ffff;
 }
 
+.mdc-theme--primary-body {
+  background-color: #337ab7;
+}
+
+body {
+  background-color: #337ab7;
+  padding: 0 !important;
+  min-height: 100vh;
+  margin: 0;
+}
+
 .siderail-item {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100px;
+    padding: 0;
+    /*transition: 0.3s ease all;*/
+    text-decoration: none;
+    box-sizing: border-box;
+    border-right: 0px solid white;
+}
+
+.siderail-item .item-icon.material-icons {
+    font-size: 64px;
+    text-align: center;
+    margin: 19px 0;
+}
+
+.siderail-open .siderail-item.mdc-list-item--activated {
+    height: 135px;
+    border-right-width: 5px;
 }
 
 .siderail-item .item-icon {
     display: block;
+    color: #8fe8d8;
 }
 
 .siderail-item .item-icon img {
@@ -32,18 +61,46 @@
     height: auto;
 }
 
+.siderail-item .item-icon.material-icons {
+    font-size: 64px;
+    text-align: center;
+    margin: 19px 0;
+}
+
+.siderail-item.mdc-list-item--activated .item-icon.material-icons {
+  color: white;
+}
+
 .siderail-item .item-text {
   width: 100%;
   text-align: center;
   display: block;
-  color: var(--mdc-theme-secondary);
+  color: white;
   opacity: 0;
   visibility: hidden;
   position: relative;
   top: -2em;
-  transition: 0.3s ease top;
+  /*transition: 0.3s ease all;*/
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 16px;
 }
 
+.siderail {
+    width: var(--right-panel-width);
+    margin: 0;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+}
+
+main {
+    width: calc(100% - var(--right-panel-width));
+    height: 100%;
+    position: absolute;
+    right: 0;
+    overflow-y: auto;
+}
 
 /*JQuery QueryBuilder Without Bootstrap*/
 .query-builder, .query-builder * {
@@ -185,3 +242,16 @@ dt div.btn-group-vertical {
     text-align:left;
 }
 
+
+
+.siderail-open .siderail-item.mdc-list-item--activated .item-text, .siderail-item.logo .item-text {
+    top: -0.5em;
+    opacity: 1;
+    visibility: visible;
+}
+
+.logo span.item-icon, .logo svg {
+    height: 100%;
+    margin: auto;
+    text-align: center;
+}
