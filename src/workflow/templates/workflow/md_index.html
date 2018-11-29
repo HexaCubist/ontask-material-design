@@ -18,6 +18,15 @@
 		$(".randomColor").each(function( i ) {
 			this.style.background = shadeColor2(materialColor(),0.3);
 		});
+
+		$(".siderail").on({
+			mouseenter: (e) => {
+			$("main").addClass("siderail-hover-expand")
+			},
+			mouseleave: (e) => {
+			$("main").removeClass("siderail-hover-expand")
+			}
+		});
 	</script>
 {% endblock %}
 {% block container %}
@@ -26,7 +35,7 @@
     </div>
     {# Workflows #}
     {% for workflow in workflows %}
-    	<a class="mdc-layout-grid__cell--span-3 mdc-card">
+    	<a class="mdc-layout-grid__cell--span-3 mdc-card workflow-card">
 			<div class="workflow-card__primary mdc-card__media randomColor">
 				<h2 class="worfklow-card__title mdc-typography--headline4">
 					{{workflow.name|capfirst}}
@@ -45,7 +54,7 @@
 			</div>
 		</a>
     {% endfor %}
-	<a class="mdc-layout-grid__cell--span-3 create-card mdc-card">
+	<a class="mdc-layout-grid__cell--span-3 workflow-card create-card mdc-card" href="{% url 'workflow:import' %}">
 		<div class="workflow-card__primary">
 			<h2 class="worfklow-card__title mdc-typography--headline4 align-center">
 				Create

@@ -12,7 +12,7 @@ $(function() {
     $(window).bind("load resize", function() {
         topOffset = 101;
         width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
-        if (width < 768) {
+        if (width < 839) {
             $('.siderail').removeClass('siderail-open');
             topOffset = 100; // 2-row-menu
         } else {

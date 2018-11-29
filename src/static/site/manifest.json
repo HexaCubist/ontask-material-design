@@ -1,0 +1,21 @@
+{
+  "short_name": "OnTask",
+  "name": "OnTask",
+  "icons": [
+    {
+      "src": "/static/img/brand/ic/web_hi_res_512.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/static/img/brand/ic/res/mipmap-xxxhdpi/ontask_ic.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/md/?source=pwa",
+  "background_color": "#337ab7",
+  "display": "standalone",
+  "scope": "/md/",
+  "theme_color": "#337ab7"
+}
