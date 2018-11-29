@@ -105,6 +105,8 @@ main {
     right: 0;
     overflow-y: auto;
     transition: 0.33s ease all;
+    box-sizing: border-box;
+    margin: 0 auto;
 }
 
 /*JQuery QueryBuilder Without Bootstrap*/
@@ -265,6 +267,7 @@ dt div.btn-group-vertical {
 .workflow-card__primary.mdc-card__media {
     padding: 0 2em;
     color: white;
+    text-decoration: none;
 }
 
 .siderail-item.logo {
@@ -357,4 +360,18 @@ dt div.btn-group-vertical {
 }
 
 .siderail.siderail-closed {
+}
+
+a.action-item {
+    text-decoration: none;
+    color: unset;
+}
+
+.action-item-date {
+    float: right;
+    justify-self: self-end;
+}
+
+.actions {
+    margin: 24px;
 }

@@ -18,6 +18,7 @@ from django.views.decorators.http import require_http_methods
 from django.utils.translation import ugettext_lazy as _
 
 import action
+from action.models import Action
 from dataops import ops, pandas_db
 from dataops.models import SQLConnection
 from dataops.sqlcon_views import SQLConnectionTableAdmin
@@ -184,13 +185,22 @@ def workflow_index(request):
         'modified'
     )
 
-    # We include the table only if it is not empty.
+    # Get the available actions
+    actions = Action.objects.filter(
+        Q(workflow__user=request.user) | Q(workflow__shared=request.user)
+    ).distinct().values(
+        'id',
+        'name',
+        'description_text',
+        'modified',
+        'workflow__name'
+    ).order_by('-modified')[:15]
+
     context = {
-        'table': WorkflowTable(workflows,
-                               id='workflow-table',
-                               orderable=False),
         'nwflows': len(workflows),
-        'workflows': workflows
+        'workflows': workflows,
+        'actions': actions,
+        'nactions': len(actions),
     }
 
     # Report if Celery is not running properly
