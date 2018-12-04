@@ -268,6 +268,8 @@ dt div.btn-group-vertical {
     padding: 0 2em;
     color: white;
     text-decoration: none;
+    background: rgb(49, 49, 49);
+    transition: 0.3s ease background;
 }
 
 .siderail-item.logo {
@@ -387,8 +389,9 @@ main .container {
 main .page-title {
     padding: 4em 5em;
     color: white;
-    background: rgb(255, 154, 77);
+    background: rgb(53, 53, 53);
     padding-bottom: 18em;
+    transition: 0.3s ease background;
 }
 
 .workflow-actions {
