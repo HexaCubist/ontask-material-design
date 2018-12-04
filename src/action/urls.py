@@ -3,7 +3,7 @@ from __future__ import unicode_literals, print_function
 
 from django.conf.urls import url
 
-from . import views_action, views_condition, views_out
+from . import views_action, views_condition, views_out, views_action_md
 
 app_name = 'action'
 
@@ -183,4 +183,14 @@ urlpatterns = [
         views_condition.clone,
         name='clone_condition'),
 
+]
+
+
+
+# Material Design versions of pages
+urlpatterns += [
+    url(r'^flow-(?P<wid>\d+)/md/$', views_action_md.action_index,
+        name='index'),
+    url(r'^md/$', views_action_md.action_index,
+        name='index'),
 ]

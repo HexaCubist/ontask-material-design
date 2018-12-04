@@ -139,11 +139,5 @@ urlpatterns = [
         name='api_lock'),
 ]
 
-# Material Design versions of pages
-urlpatterns += [
-    url(r'^(?P<pk>\d+)/md/detail/$', md_views.WorkflowDetailView.as_view(),
-        name='detail'),
-]
-
 
 urlpatterns = format_suffix_patterns(urlpatterns)
