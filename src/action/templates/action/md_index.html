@@ -7,6 +7,14 @@
 {% load widget_tweaks %}
 {% block title %}{{ block.super }}{{ workflow.name }}{% endblock %}
 {% block extrahead %}
+<style type="text/css">
+	main.mdc-theme--primary-body {
+		background: #f5f5f5;
+	}
+	.page-menu.mdc-card__actions {
+		background: white;
+	}
+</style>
 {% endblock extrahead %}
 {% block scripts %}
 	<script type="text/javascript">
@@ -15,9 +23,10 @@
 			return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
 		}
 
-		$(".randomColor").each(function( i ) {
-			this.style.background = shadeColor2(materialColor(),0.3);
-		});
+		// Math.seedrandom("{{workflow.id}}");
+		// var bodycolor = materialColor();
+		// $("main.mdc-theme--primary-body").css("background",shadeColor2(bodycolor,0.3));
+		// $("main.mdc-theme--primary-body").css("background",shadeColor2(bodycolor,0.3));
 
 		$(".siderail").on({
 			mouseenter: (e) => {
@@ -27,26 +36,76 @@
 			$("main").removeClass("siderail-hover-expand")
 			}
 		});
+
+		const createmenu = new mdc.menu.MDCMenu(document.querySelector('.createmenu'));
 	</script>
 {% endblock %}
+{% block heading %}
+	<div class="page-title">
+		<h1 class="mdc-typography--headline2">{{ workflow.name }}<br/>
+			<small>2018 Semester 1</small>
+		</h1>
+		<div class="page-title-menu">
+			<div class="manage-data mdc-menu-surface--anchor">
+				<button class="mdc-button" data-mdc-auto-init="MDCRipple" onclick="createmenu.open = !createmenu.open">
+					<i class="material-icons mdc-button__icon">arrow_drop_down</i>
+				  Manage Data
+				</button>
+				<div class="mdc-menu mdc-menu-surface createmenu" tabindex="-1">
+					<ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+						<li class="mdc-list-item" role="menuitem">
+							<span class="mdc-list-item__text">A Menu Item</span>
+						</li>
+						<li class="mdc-list-item" role="menuitem">
+							<span class="mdc-list-item__text">Another Menu Item</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<button class="mdc-button mdc-button--raised action-add" data-mdc-auto-init="MDCRipple">
+				<i class="material-icons mdc-button__icon">add</i>
+				New Action
+			</button> 
+		</div>
+	</div>
+{% endblock heading %}
 {% block container %}
     {# Workflows #}
 
-    <h1 class="section-title mdc-typography--headline2">{{ workflow.name }}: Actions</h1>
-    {% if nactions %}
-    <div class="mdc-layout-grid__cell--span-12 mdc-card actions">
+    {% if no_actions %}
+    <div class="mdc-layout-grid__cell--span-12 mdc-card workflow-actions">
+    	<h4>No Recent actions! Start by creating some in a workflow...</h4>
+    </div>
+    {% else %}
+    <div class="mdc-layout-grid__cell--span-12 mdc-card workflow-actions">
+		<div class="actions-menu mdc-card__actions">
+			<div class="mdc-card__action-buttons">
+				<a href="{% url 'action:index' wid=workflow.id %}" class="mdc-button mdc-card__action mdc-card__action--button">Open</a>
+			</div>
+			<div class="mdc-card__action-icons">
+				<button class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" title="More options">more_vert</button>
+			</div>
+		</div>
 		<ul class="mdc-list action-list" aria-orientation="vertical">
-			{% for action in actions %}
+			{% for action in qset %}
 				<a href="{% url 'action:edit' pk=action.id %}" class="action-item"><li class="mdc-list-item">
-					<span class="mdc-list-item__text">{{action.workflow__name}} - {{action.name}}</span>
+					{% if action.action_tval == 'personalized_text' %}
+						<span class="mdc-list-item__graphic {{action.action_tval}} material-icons" aria-hidden="true" title="{{action.action_type}}">short_text</span>
+					{% elif action.action_tval == 'personalized_json' %}
+						<span class="mdc-list-item__graphic {{action.action_tval}} material-icons" aria-hidden="true" title="{{action.action_type}}">code</span>
+					{% elif action.action_tval == 'survey' %}
+						<span class="mdc-list-item__graphic {{action.action_tval}} material-icons" aria-hidden="true" title="{{action.action_type}}">poll</span>
+					{% elif action.action_tval == 'todo_list' %}
+						<span class="mdc-list-item__graphic {{action.action_tval}} material-icons" aria-hidden="true" title="{{action.action_type}}">timer</span>
+					{% endif %}
+					<span class="mdc-list-item__text mdc-layout-grid__inner">
+						<div class="mdc-layout-grid__cell--span-2 action-title">{{action.name|truncatechars:24}}</div>
+						<div class="mdc-layout-grid__cell--span-6 action-description">{{action.description_text|truncatechars:140}}</div>
+					</span>
 					<span class="mdc-list-item__meta action-item-date" title="{{action.modified}}">{{action.modified|date:"d/m/y"}}</span>
 				</li></a>
 			{% endfor %}
 		</ul>
-    </div>
-    {% else %}
-    <div class="mdc-layout-grid__cell--span-12 mdc-card">
-    	<h4>No Recent actions! Start by creating some in a workflow...</h4>
     </div>
     {% endif %}
 {% endblock container %}

@@ -75,7 +75,7 @@ def action_index(request, wid=None):
     actions = Action.objects.filter(workflow__id=workflow.id)
 
     # Context to render the template
-    context = {'has_table': ops.workflow_has_table(workflow)}
+    context = {'has_table': ops.workflow_has_table(workflow), 'workflow': workflow}
 
     # Build the table only if there is anything to show (prevent empty table)
     qset = []
@@ -88,11 +88,13 @@ def action_index(request, wid=None):
                      'is_out': action.is_out,
                      'is_executable': action.is_executable,
                      'last_executed_log': action.last_executed_log,
-                     'serve_enabled': action.serve_enabled})
+                     'serve_enabled': action.serve_enabled,
+                     'modified': action.modified})
 
     context['table'] = \
         ActionTable(qset, orderable=False)
     context['no_actions'] = len(qset) == 0
+    context['qset'] = qset
 
     return render(request, 'action/md_index.html', context)
 

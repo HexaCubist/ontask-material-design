@@ -20,7 +20,7 @@
 
 .mdc-theme--primary-body {
   background-color: #337ab7;
-  padding: 1em 5em;
+  padding: 0;
 }
 
 body {
@@ -374,4 +374,53 @@ a.action-item {
 
 .actions {
     margin: 24px;
+}
+
+.mdc-list-item .mdc-layout-grid__inner {
+    width: 100%;
+}
+
+main .container {
+    padding: 1em 5em;
+}
+
+main .page-title {
+    padding: 4em 5em;
+    color: white;
+    background: rgb(255, 154, 77);
+    padding-bottom: 18em;
+}
+
+.workflow-actions {
+    position: relative;
+    top: -15em;
+}
+
+.page-title-menu {
+    float: right;
+}
+
+.page-title h1 {
+    display: inline-block;
+    margin: 0;
+}
+
+.page-title-menu .mdc-button {
+    margin: 0 0.3em;
+    color: white;
+}
+
+.manage-data {
+    display: inline-block;
+}
+
+.page-title-menu .mdc-button.mdc-ripple {}
+
+.page-title-menu .action-add {
+    color: black;
+    background: white;
+}
+
+.page-title-menu .mdc-menu {
+    top: 40px !important;
 }
