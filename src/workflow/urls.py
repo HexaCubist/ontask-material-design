@@ -5,7 +5,7 @@ from django.conf.urls import url
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from . import attribute_views, column_views, import_export_views, share_views, \
-    views, api
+    views, api, md_views
 
 app_name = 'workflow'
 
@@ -138,5 +138,12 @@ urlpatterns = [
         api.WorkflowAPILock.as_view(),
         name='api_lock'),
 ]
+
+# Material Design versions of pages
+urlpatterns += [
+    url(r'^(?P<pk>\d+)/md/detail/$', md_views.WorkflowDetailView.as_view(),
+        name='detail'),
+]
+
 
 urlpatterns = format_suffix_patterns(urlpatterns)

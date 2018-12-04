@@ -1,0 +1,87 @@
+{% extends 'base_md.html' %}
+{% load i18n %}
+{% load ontask_tags %}
+{% load static %}
+{% load django_tables2 %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block title %}{{ block.super }}{% trans 'Workflows' %}{% endblock %}
+{% block extrahead %}
+{% endblock extrahead %}
+{% block scripts %}
+	<script type="text/javascript">
+		function shadeColor2(color, percent) {   
+			var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+			return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+		}
+
+		$(".randomColor").each(function( i ) {
+			this.style.background = shadeColor2(materialColor(),0.3);
+		});
+
+		$(".siderail").on({
+			mouseenter: (e) => {
+			$("main").addClass("siderail-hover-expand")
+			},
+			mouseleave: (e) => {
+			$("main").removeClass("siderail-hover-expand")
+			}
+		});
+	</script>
+{% endblock %}
+{% block container %}
+    {# Workflows #}
+
+    <h1 class="section-title mdc-typography--headline2">Workflows</h1>
+	<div class="mdc-layout-grid">
+		<div class="mdc-layout-grid__inner">
+			{% for workflow in workflows %}
+				<div class="mdc-layout-grid__cell--span-3 mdc-card workflow-card">
+					<a href="{% url 'workflow:detail' pk=workflow.id %}" class="workflow-card__primary mdc-card__media randomColor mdc-ripple-surface" data-mdc-auto-init="MDCRipple">
+						<h2 class="worfklow-card__title mdc-typography--headline4">
+							{{workflow.name|capfirst}}
+							<br/><small>2018 Semester 1</small>
+						</h2>
+					</a>
+					<div class="workflow-card__primary">
+					</div>
+					<div class="mdc-card__actions">
+						<div class="mdc-card__action-buttons">
+							<a href="{% url 'workflow:detail' pk=workflow.id %}" class="mdc-button mdc-card__action mdc-card__action--button">Open</a>
+						</div>
+						<div class="mdc-card__action-icons">
+							<button class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" title="More options">more_vert</button>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			<a class="mdc-layout-grid__cell--span-3 workflow-card create-card mdc-card mdc-ripple-surface" href="{% url 'workflow:import' %}" data-mdc-auto-init="MDCRipple">
+				<div class="workflow-card__primary">
+					<h2 class="worfklow-card__title mdc-typography--headline4 align-center">
+						Create
+					</h2>
+				</div>
+			</a>
+		</div>
+	</div>
+	{# Actions #}
+    <div class="mdc-layout-grid__cell--span-12">
+    	<h1 class="section-title mdc-typography--headline2">Recent Actions</h1>
+    </div>
+    {% if nactions %}
+    <div class="mdc-layout-grid__cell--span-12 mdc-card actions">
+		<ul class="mdc-list action-list" aria-orientation="vertical">
+			{% for action in actions %}
+				<a href="{% url 'action:edit' pk=action.id %}" class="action-item"><li class="mdc-list-item">
+					<span class="mdc-list-item__text">{{action.workflow__name}} - {{action.name}}</span>
+					<span class="mdc-list-item__meta action-item-date" title="{{action.modified}}">{{action.modified|date:"d/m/y"}}</span>
+				</li></a>
+			{% endfor %}
+		</ul>
+    </div>
+    {% else %}
+    <div class="mdc-layout-grid__cell--span-12 mdc-card">
+    	<h4>No Recent actions! Start by creating some in a workflow...</h4>
+    </div>
+    {% endif %}
+{% endblock container %}

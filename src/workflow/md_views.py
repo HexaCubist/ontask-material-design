@@ -220,3 +220,64 @@ def workflow_index(request):
 
     return render(request, 'workflow/md_index.html', context)
 
+class WorkflowDetailView(UserIsInstructor, generic.DetailView):
+    """
+    @DynamicAttrs
+    """
+    model = Workflow
+    template_name = 'workflow/md_detail.html'
+    context_object_name = 'workflow'
+
+    def get_object(self, queryset=None):
+        old_obj = super(WorkflowDetailView, self).get_object(queryset=queryset)
+
+        # Check if the workflow is locked
+        obj = get_workflow(self.request, old_obj.id)
+        return obj
+
+    def get_context_data(self, **kwargs):
+
+        context = super(WorkflowDetailView, self).get_context_data(**kwargs)
+
+        workflow_id = self.request.session.get('ontask_workflow_id', None)
+        if not workflow_id:
+            return context
+
+        # Get the table information (if it exist)
+        context['table_info'] = None
+        if ops.workflow_id_has_table(self.object.id):
+            context['table_info'] = {
+                'num_rows': self.object.nrows,
+                'num_cols': self.object.ncols,
+                'num_actions': self.object.actions.all().count(),
+                'num_attributes': len(self.object.attributes)}
+
+        # Get the key columns
+        columns = Column.objects.filter(
+            workflow__id=workflow_id,
+            is_key=True
+        )
+
+        # put the number of key columns in the workflow
+        context['num_key_columns'] = columns.count()
+
+        # Guarantee that column position is set for backward compatibility
+        columns = self.object.columns.all()
+        if any(x.position == 0 for x in columns):
+            # At least a column has index equal to zero, so reset all of them
+            for idx, c in enumerate(columns):
+                c.position = idx + 1
+                c.save()
+
+        # Safety check for consistency (only in development)
+        if settings.DEBUG:
+            assert pandas_db.check_wf_df(self.object)
+
+            # Columns are properly numbered
+            cpos = Column.objects.filter(
+                workflow__id=workflow_id
+            ).values_list('position', flat=True)
+            assert sorted(cpos) == range(1, len(cpos) + 1)
+
+        return context
+
