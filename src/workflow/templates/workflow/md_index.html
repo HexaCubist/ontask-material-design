@@ -16,6 +16,7 @@
 		}
 
 		$(".randomColor").each(function( i ) {
+			Math.seedrandom($(this).attr("id"));
 			this.style.background = shadeColor2(materialColor(),0.3);
 		});
 
@@ -37,7 +38,7 @@
 		<div class="mdc-layout-grid__inner">
 			{% for workflow in workflows %}
 				<div class="mdc-layout-grid__cell--span-3 mdc-card workflow-card">
-					<a href="{% url 'action:index' wid=workflow.id %}" class="workflow-card__primary mdc-card__media randomColor mdc-ripple-surface" data-mdc-auto-init="MDCRipple">
+					<a href="{% url 'action:index' wid=workflow.id %}" class="workflow-card__primary mdc-card__media randomColor mdc-ripple-surface" id="{{workflow.id}}" data-mdc-auto-init="MDCRipple">
 						<h2 class="worfklow-card__title mdc-typography--headline4">
 							{{workflow.name|capfirst}}
 							<br/><small>2018 Semester 1</small>
