@@ -14,9 +14,17 @@
 	.page-menu.mdc-card__actions {
 		background: white;
 	}
+
+	mark{
+		background: orange;
+		color: black;
+	}
+
 </style>
 {% endblock extrahead %}
 {% block scripts %}
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.3.0/fuse.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
 	<script type="text/javascript">
 		function shadeColor2(color, percent) {   
 			var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
@@ -38,6 +46,44 @@
 		});
 
 		const createmenu = new mdc.menu.MDCMenu(document.querySelector('.createmenu'));
+
+		const options = {
+			"shouldSort": true,
+			"includeMatches": false,
+			"threshold": 0.6,
+			"location": 0,
+			"distance": 100,
+			"maxPatternLength": 32,
+			"minMatchCharLength": 1,
+			"keys": [
+				"text"
+			]
+		};
+		const all = $(".action-list .action-item .mdc-list-item");
+		const list = all.map( (i) =>{
+			return {
+				elem: all[i],
+				text: $(all[i]).text(),
+			}
+		}).get();
+		var fuse = new Fuse(list, options); // "list" is the item array
+
+		$(".actions-search-field").on("input", (event) => {
+			let search = event.target.value;
+			if (search.length < 1) {
+				$(all).show();
+				$(".action-list").unmark();
+				return
+			}
+			// Search the text in each item in 'all' for the text in 'search'.
+			let results = fuse.search(search);
+			let allfound = results.map( e => e.elem );
+			let notfound = all.get().filter( e => !allfound.includes(e) );
+			$(allfound).show();
+			$(notfound).hide();
+			// Highlight the results
+			$(".action-list").mark(search, {"separateWordSearch": true, "acrossElements": true});
+		});
 	</script>
 {% endblock %}
 {% block heading %}
@@ -79,16 +125,18 @@
     {% else %}
     <div class="mdc-layout-grid__cell--span-12 mdc-card workflow-actions">
 		<div class="actions-menu mdc-card__actions">
-			<div class="mdc-card__action-buttons">
-				<a href="{% url 'action:index' wid=workflow.id %}" class="mdc-button mdc-card__action mdc-card__action--button">Open</a>
-			</div>
-			<div class="mdc-card__action-icons">
-				<button class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" title="More options">more_vert</button>
+			<div class="mdc-card__action-buttons workflow-actions-search" data-mdc-auto-init="MDCTextField">
+				<div class="mdc-text-field mdc-text-field--fullwidth">
+				  <input class="mdc-text-field__input actions-search-field"
+				         type="text"
+				         placeholder="Search..."
+				         aria-label="Search">
+				</div>
 			</div>
 		</div>
 		<ul class="mdc-list action-list" aria-orientation="vertical">
 			{% for action in qset %}
-				<a href="{% url 'action:edit' pk=action.id %}" class="action-item"><li class="mdc-list-item">
+				<a href="{% url 'action:edit' pk=action.id %}" class="action-item" id="{{action.id}}"><li class="mdc-list-item">
 					{% if action.action_tval == 'personalized_text' %}
 						<span class="mdc-list-item__graphic {{action.action_tval}} material-icons" aria-hidden="true" title="{{action.action_type}}">short_text</span>
 					{% elif action.action_tval == 'personalized_json' %}

@@ -518,3 +518,9 @@ main .page-title {
     opacity: 1;
     background: hsla(205, 100%, 20%, 1);
 }
+
+.workflow-actions-search .mdc-text-field {
+    height: 2em;
+    padding-left: 16px;
+    margin-top: 8px;
+}
