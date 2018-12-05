@@ -39,6 +39,10 @@
             <span class="item-icon material-icons material-icons--outline">dashboard</span>
             <span class="item-text">Home</span>
           </a>
+          <a href="{% url 'action:index' %}" class="action-sub siderail-item mdc-list-item mdc-ripple-js {% if request.session.ontask_workflow_id %}action-sub-visible{% endif %}" data-mdc-auto-init="MDCRipple">
+            <span class="item-icon material-icons material-icons--outline">send</span>
+            <span class="item-text">Actions</span>
+          </a>
           <a href="{% url 'workflows' %}" class="siderail-item mdc-list-item mdc-ripple-js" data-mdc-auto-init="MDCRipple">
             <span class="item-icon material-icons material-icons--outline">dns</span>
             <span class="item-text">Workflows</span>

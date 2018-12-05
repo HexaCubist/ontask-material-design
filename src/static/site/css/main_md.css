@@ -40,6 +40,9 @@ body {
     text-decoration: none;
     box-sizing: border-box;
     border-right: 0px solid white;
+    z-index: 1;
+    background: #004e87;
+    transition: 0.3s ease all;
 }
 
 .siderail-item .item-icon.material-icons {
@@ -96,6 +99,7 @@ body {
     bottom: 0;
     position: absolute;
     transition: 0.33s ease all;
+    z-index: 0;
 }
 
 main {
@@ -274,6 +278,7 @@ dt div.btn-group-vertical {
 
 .siderail-item.logo {
     height: 105px;
+    position: relative;
 }
 
 .section-title {
@@ -469,4 +474,47 @@ main .page-title {
 .action-info .action-description {
     display: inline-block;
     width: calc( 100% - 14em );
+}
+
+
+.action-item .mdc-list-item__graphic.material-icons {
+    margin-left: 0;
+    margin-right: 16px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.action-item .personalized_text {
+    color: #a44cb3;
+}
+
+.action-item .personalized_json {
+    color: #00838F;
+}
+
+.action-item .survey {
+    color: #1E88E5;
+}
+
+.action-item .todo_list {
+  color: #689F38
+}
+
+.siderail .siderail-item.action-sub {
+    background: hsla(205, 100%, 17%, 1);
+    box-shadow: inset 0px 13px 13px -13px #0000004f;
+    position: relative;
+    opacity: 0;
+}
+
+.siderail .siderail-item.action-sub.mdc-list-item--activated {opacity: 1;}
+
+.siderail .siderail-item.action-sub:not(.mdc-list-item--activated):not(.action-sub-visible) {
+    height: 0;
+}
+
+.siderail .siderail-item.action-sub.action-sub-visible {
+    opacity: 1;
+    background: hsla(205, 100%, 20%, 1);
 }

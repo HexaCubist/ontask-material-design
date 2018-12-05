@@ -22,7 +22,11 @@ $(function() {
 
     var url = window.location;
     var element = $('a.mdc-list-item').filter(function() {
-        return this.href == url;
+        console.log(this.href);
+        console.log(this.classList);
+        console.log(url);
+        if (this.href == url) return true;
+        return this.classList.contains("action-sub") && url.href.indexOf("/action/") > -1;
     }).addClass('mdc-list-item--activated');
 });
 
