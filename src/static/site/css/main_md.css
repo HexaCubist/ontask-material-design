@@ -309,8 +309,9 @@ dt div.btn-group-vertical {
   .workflow-card {
      grid-column-end: span 6 !important; 
   }
-  .mdc-theme--primary-body {
-      padding: 1em 2em;
+  main div.container, main .page-title {
+    padding-left: 2em !important;
+    padding-right: 2em !important;
   }
 }
 
@@ -357,6 +358,25 @@ dt div.btn-group-vertical {
   }
 }
 
+.page-title small {
+    display: block;
+}
+
+@media screen and (max-width: 479px) {
+    .workflow-actions {
+      top: -12em !important;
+    }
+
+    .page-title h1 {
+      font-size: 3em
+    }
+
+    .page-title small {
+      display: inline;
+      font-size: 0.8em;
+    }
+}
+
 .siderail-item .item-text, .mdc-typography--headline2, .mdc-typography--headline3, .mdc-typography--headline4 {
     font-family: 'Merriweather';
 }
@@ -384,6 +404,7 @@ a.action-item {
 
 main .container {
     padding: 1em 5em;
+    transition: inherit;
 }
 
 main .page-title {
@@ -391,7 +412,7 @@ main .page-title {
     color: white;
     background: rgb(53, 53, 53);
     padding-bottom: 18em;
-    transition: 0.3s ease background;
+    transition: 0.3s ease all;
 }
 
 .workflow-actions {
@@ -426,4 +447,20 @@ main .page-title {
 
 .page-title-menu .mdc-menu {
     top: 40px !important;
+}
+
+.action-item .action-info {
+    display: block;
+    position: relative;
+    width: 90%;
+}
+
+.action-info .action-title {
+    width: 14em;
+    display: inline-block;
+}
+
+.action-info .action-description {
+    display: inline-block;
+    width: calc( 100% - 14em );
 }

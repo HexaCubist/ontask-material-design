@@ -42,7 +42,7 @@
 {% endblock %}
 {% block heading %}
 	<div class="page-title">
-		<h1 class="mdc-typography--headline2">{{ workflow.name }}<br/>
+		<h1 class="mdc-typography--headline2">{{ workflow.name }}
 			<small>2018 Semester 1</small>
 		</h1>
 		<div class="page-title-menu">
@@ -98,9 +98,9 @@
 					{% elif action.action_tval == 'todo_list' %}
 						<span class="mdc-list-item__graphic {{action.action_tval}} material-icons" aria-hidden="true" title="{{action.action_type}}">timer</span>
 					{% endif %}
-					<span class="mdc-list-item__text mdc-layout-grid__inner">
-						<div class="mdc-layout-grid__cell--span-2 action-title">{{action.name|truncatechars:24}}</div>
-						<div class="mdc-layout-grid__cell--span-6 action-description">{{action.description_text|truncatechars:140}}</div>
+					<span class="mdc-list-item__text action-info">
+						<div class="action-title">{{action.name|truncatechars:24}}</div>
+						<div class="action-description">{{action.description_text|truncatechars:140}}</div>
 					</span>
 					<span class="mdc-list-item__meta action-item-date" title="{{action.modified}}">{{action.modified|date:"d/m/y"}}</span>
 				</li></a>
