@@ -66,23 +66,25 @@
 		</div>
 	</div>
 	{# Actions #}
-    <div class="mdc-layout-grid__cell--span-12">
+    <div>
     	<h1 class="section-title mdc-typography--headline2">Recent Actions</h1>
     </div>
-    {% if nactions %}
-    <div class="mdc-layout-grid__cell--span-12 mdc-card actions">
-		<ul class="mdc-list action-list" aria-orientation="vertical">
-			{% for action in actions %}
-				<a href="{% url 'action:edit' pk=action.id %}" class="action-item"><li class="mdc-list-item">
-					<span class="mdc-list-item__text">{{action.workflow__name}} - {{action.name}}</span>
-					<span class="mdc-list-item__meta action-item-date" title="{{action.modified}}">{{action.modified|date:"d/m/y"}}</span>
-				</li></a>
-			{% endfor %}
-		</ul>
-    </div>
-    {% else %}
-    <div class="mdc-layout-grid__cell--span-12 mdc-card">
-    	<h4 style="color: #757575;text-align: center;margin: 3em 0;" class="mdc-typography--headline4">No Recent actions! Start by creating some in a workflow...</h4>
-    </div>
-    {% endif %}
+	<div class="mdc-layout-grid">
+	    {% if nactions %}
+	    <div class="mdc-layout-grid__cell--span-12 mdc-card actions">
+			<ul class="mdc-list action-list" aria-orientation="vertical">
+				{% for action in actions %}
+					<a href="{% url 'action:edit' pk=action.id %}" class="action-item"><li class="mdc-list-item">
+						<span class="mdc-list-item__text">{{action.workflow__name}} - {{action.name}}</span>
+						<span class="mdc-list-item__meta action-item-date" title="{{action.modified}}">{{action.modified|date:"d/m/y"}}</span>
+					</li></a>
+				{% endfor %}
+			</ul>
+	    </div>
+	    {% else %}
+	    <div class="mdc-layout-grid__cell--span-12 mdc-card">
+	    	<h4 style="color: #757575;text-align: center;margin: 3em 0;" class="mdc-typography--headline4">No Recent actions! Start by creating some in a workflow...</h4>
+	    </div>
+	    {% endif %}
+	</div>
 {% endblock container %}

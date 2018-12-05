@@ -323,7 +323,7 @@ dt div.btn-group-vertical {
 
 @media screen and (max-width: 839px) {
   .workflow-card {
-     grid-column-end: span 12 !important; 
+     grid-column-end: span 12 !important;
   }
 
   :root {
@@ -374,6 +374,12 @@ dt div.btn-group-vertical {
     .page-title small {
       display: inline;
       font-size: 0.8em;
+    }
+
+    .container > .mdc-layout-grid, .container > .mdc-layout-grid .mdc-layout-grid__cell--span-12 {
+      padding-left: 0;
+      padding-right: 0;
+      margin: 0;
     }
 }
 
