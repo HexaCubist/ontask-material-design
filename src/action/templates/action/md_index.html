@@ -89,7 +89,8 @@
 {% block heading %}
 	<div class="page-title">
 		<h1 class="mdc-typography--headline2">{{ workflow.name }}
-			<small>2018 Semester 1</small>
+			<small>{{workflow.description_text|capfirst}}
+			<small>2018 Semester 1</small></small>
 		</h1>
 		<div class="page-title-menu">
 			<div class="manage-data mdc-menu-surface--anchor">

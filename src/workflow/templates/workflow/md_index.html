@@ -41,7 +41,10 @@
 					<a href="{% url 'action:index' wid=workflow.id %}" class="workflow-card__primary mdc-card__media randomColor mdc-ripple-surface" id="{{workflow.id}}" data-mdc-auto-init="MDCRipple">
 						<h2 class="worfklow-card__title mdc-typography--headline4">
 							{{workflow.name|capfirst}}
-							<br/><small>2018 Semester 1</small>
+							<br/><small>
+								{{workflow.description_text|capfirst}}<br/>
+								<small>2018 Semester 1</small>
+							</small>
 						</h2>
 					</a>
 					<div class="workflow-card__primary">
@@ -59,7 +62,7 @@
 			<a class="mdc-layout-grid__cell--span-3 workflow-card create-card mdc-card mdc-ripple-surface" href="{% url 'workflow:import' %}" data-mdc-auto-init="MDCRipple">
 				<div class="workflow-card__primary">
 					<h2 class="worfklow-card__title mdc-typography--headline4 align-center">
-						Create
+						Create a new<br/> workflow
 					</h2>
 				</div>
 			</a>

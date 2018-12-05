@@ -287,8 +287,7 @@ dt div.btn-group-vertical {
     margin-bottom: 0;
 }
 
-.create-card .align-center {
-}
+.create-card .align-center {text-align: center;}
 
 .create-card {
     position: relative;
@@ -302,7 +301,8 @@ dt div.btn-group-vertical {
     margin: 0;
     width: 100%;
     text-decoration: none;
-    height: 190px;
+    height: 100%;
+    min-height: 234px;
 }
 
 @media screen and (max-width: 1500px) {
