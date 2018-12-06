@@ -98,3 +98,127 @@ def action_index(request, wid=None):
 
     return render(request, 'action/md_index.html', context)
 
+
+@user_passes_test(is_instructor)
+def edit_action(request, pk):
+    """
+    View to select the right action edit procedure
+    :param request: Request object
+    :param pk: Action PK
+    :return: HTML response
+    """
+
+    # Try to get the workflow first
+    workflow = get_workflow(request)
+    if not workflow:
+        return redirect('workflow:index')
+
+    if workflow.nrows == 0:
+        messages.error(
+            request,
+            _('Workflow has no data. Go to "Manage table data" to upload data.')
+        )
+        return redirect(reverse('action:index'))
+
+    # Get the action and the columns
+    try:
+        action = Action.objects.filter(
+            Q(workflow__user=request.user) |
+            Q(workflow__shared=request.user)
+        ).distinct().prefetch_related('columns').get(pk=pk)
+    except ObjectDoesNotExist:
+        return redirect('action:index')
+
+    if action.action_type == Action.PERSONALIZED_TEXT:
+        return edit_action_out(request, workflow, action)
+
+    if action.action_type == Action.PERSONALIZED_JSON:
+        return edit_action_out(request, workflow, action)
+
+    if action.action_type == Action.SURVEY:
+        return edit_action_in(request, workflow, action)
+
+    if action.action_type == Action.TODO_LIST:
+        return redirect(reverse('under_construction'), {})
+        # return edit_action_in(request, workflow, action)
+
+
+def edit_action_out(request, workflow, action):
+    """
+    View to handle the form to edit an action OUT (editor, conditions,
+    filters, etc).
+    :param request: Request object
+    :param action: Action
+    :return: HTML response
+    """
+
+    # Create the form
+    form = EditActionOutForm(request.POST or None, instance=action)
+
+    # Get the filter or None
+    filter_condition = action.get_filter()
+
+    # Conditions to show in the page.
+    conditions = Condition.objects.filter(
+        action=action, is_filter=False
+    ).order_by('created')
+
+    # Context to render the form
+    context = {'filter_condition': filter_condition,
+               'action': action,
+               'conditions': conditions,
+               'query_builder_ops': workflow.get_query_builder_ops_as_str(),
+               'attribute_names': [x for x in workflow.attributes.keys()],
+               'column_names': workflow.get_column_names(),
+               'selected_rows':
+                   filter_condition.n_rows_selected if filter_condition else -1,
+               'has_data': ops.workflow_has_table(action.workflow),
+               'total_rows': workflow.nrows,
+               'form': form,
+               'vis_scripts': PlotlyHandler.get_engine_scripts()
+               }
+
+    # Template to use
+    template = 'action/md_edit_personalized_text.html'
+    if action.action_type == Action.PERSONALIZED_JSON:
+        template = 'action/edit_personalized_json.html'
+
+    # Processing the request after receiving the text from the editor
+    if request.method == 'GET' or not form.is_valid():
+        # Return the same form in the same page
+        return render(request, template, context=context)
+
+    # Get content
+    content = form.cleaned_data.get('content', None)
+
+    # Render the content as a template and catch potential problems.
+    # This seems to be only possible if dealing directly with Jinja2
+    # instead of Django.
+    try:
+        render_template(content, {}, action)
+    except Exception as e:
+        # Pass the django exception to the form (fingers crossed)
+        form.add_error(None, e.message)
+        return render(request, template, context)
+
+    # Log the event
+    Log.objects.register(request.user,
+                         Log.ACTION_UPDATE,
+                         action.workflow,
+                         {'id': action.id,
+                          'name': action.name,
+                          'workflow_id': workflow.id,
+                          'workflow_name': workflow.name,
+                          'content': content})
+
+    # Text is good. Update the content of the action
+    action.set_content(content)
+
+    # Update additional fields
+    if action.action_type == Action.PERSONALIZED_JSON:
+        action.target_url = form.cleaned_data['target_url']
+
+    action.save()
+
+    return redirect('action:index')
+

@@ -1,0 +1,138 @@
+{% extends 'base_md.html' %}
+{% load i18n %}
+{% load ontask_tags %}
+{% load static %}
+{% load django_tables2 %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block title %}{{ block.super }}{{ workflow.name }}{% endblock %}
+{% block extrahead %}
+<style type="text/css">
+  main.mdc-theme--primary-body {
+    background: #f5f5f5;
+  }
+  .page-menu.mdc-card__actions {
+    background: white;
+  }
+
+  mark{
+    background: orange;
+    color: black;
+  }
+
+</style>
+{% endblock extrahead %}
+{% block scripts %}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.3.0/fuse.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+  <script type="text/javascript">
+    function shadeColor2(color, percent) {   
+      var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+      return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+    }
+
+    Math.seedrandom("{{workflow.id}}");
+    var bodycolor = materialColor();
+    $(".page-title").css("background",shadeColor2(bodycolor,0.3));
+    // $("main.mdc-theme--primary-body").css("background",shadeColor2(bodycolor,0.3));
+
+    $(".siderail").on({
+      mouseenter: (e) => {
+      $("main").addClass("siderail-hover-expand")
+      },
+      mouseleave: (e) => {
+      $("main").removeClass("siderail-hover-expand")
+      }
+    });
+
+    const createmenu = new mdc.menu.MDCMenu(document.querySelector('.createmenu'));
+
+    $(".steps-tab-bar").on("MDCTabBar:activated", event => {
+      let idx = event.detail.index;
+      $(".step-content--item").removeClass("active");
+      $("#step-content-" + idx).addClass("active");
+    });
+  </script>
+{% endblock %}
+{% block heading %}
+  <div class="page-title">
+    <a href="{% url 'action:index' %}" class="mdc-fab btn-back" aria-label="Favorite">
+      <span class="mdc-fab__icon material-icons">arrow_back</span>
+    </a>
+    <h1 class="mdc-typography--headline3">
+      Edit {{ action.name }}
+      <small>{{ workflow.name }}</small></small>
+    </h1>
+    <div class="page-title-menu">
+      <div class="manage-data mdc-menu-surface--anchor">
+        <button class="mdc-button" data-mdc-auto-init="MDCRipple" onclick="createmenu.open = !createmenu.open">
+          <i class="material-icons mdc-button__icon">arrow_drop_down</i>
+          Manage Data
+        </button>
+        <div class="mdc-menu mdc-menu-surface createmenu" tabindex="-1">
+          <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
+            <li class="mdc-list-item" role="menuitem">
+              <span class="mdc-list-item__text">A Menu Item</span>
+            </li>
+            <li class="mdc-list-item" role="menuitem">
+              <span class="mdc-list-item__text">Another Menu Item</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <button class="mdc-button mdc-button--raised action-add" data-mdc-auto-init="MDCRipple">
+        <i class="material-icons mdc-button__icon">add</i>
+        New Action
+      </button> 
+    </div>
+  </div>
+{% endblock heading %}
+{% block container %}
+    <div class="mdc-layout-grid__cell--span-12 mdc-card workflow-actions">
+      <div class="workflow-card__primary">
+        <div class="mdc-tab-bar steps-tab-bar" role="tablist" data-mdc-auto-init="MDCTabBar">
+          <div class="mdc-tab-scroller">
+            <div class="mdc-tab-scroller__scroll-area">
+              <div class="mdc-tab-scroller__scroll-content">
+                <button class="mdc-tab mdc-tab--stacked mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+                  <span class="mdc-tab__content">
+                    <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
+                    <span class="mdc-tab__text-label">Step One</span>
+                  </span>
+                  <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                    <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                  </span>
+                  <span class="mdc-tab__ripple"></span>
+                </button>
+                <button class="mdc-tab mdc-tab--stacked" role="tab" tabindex="1">
+                  <span class="mdc-tab__content">
+                    <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
+                    <span class="mdc-tab__text-label">Step Two</span>
+                  </span>
+                  <span class="mdc-tab-indicator">
+                    <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                  </span>
+                  <span class="mdc-tab__ripple"></span>
+                </button>
+                <button class="mdc-tab mdc-tab--stacked" role="tab" tabindex="1">
+                  <span class="mdc-tab__content">
+                    <span class="mdc-tab__icon material-icons" aria-hidden="true">favorite</span>
+                    <span class="mdc-tab__text-label">Step Three</span>
+                  </span>
+                  <span class="mdc-tab-indicator">
+                    <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                  </span>
+                  <span class="mdc-tab__ripple"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-content">
+          <div class="step-content--item active" id="step-content-0">Step 1</div>
+          <div class="step-content--item" id="step-content-1">Step 2</div>
+          <div class="step-content--item" id="step-content-2">Step 3</div>
+        </div>
+      </div>
+    </div>
+{% endblock container %}

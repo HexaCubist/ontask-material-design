@@ -2,6 +2,7 @@
 :root {
   --mdc-theme-primary: #337ab7;
   --mdc-theme-secondary: #8fe8d8;
+  --mdc-theme-on-secondary: black;
   --right-panel-width: 115px;
 }
 
@@ -439,6 +440,8 @@ main .page-title {
 .page-title h1 {
     display: inline-block;
     margin: 0;
+    max-width: 100%;
+    width: 1200px;
 }
 
 .page-title-menu .mdc-button {
@@ -524,4 +527,18 @@ main .page-title {
     height: 2em;
     padding-left: 16px;
     margin-top: 8px;
+}
+
+.btn-back {
+    margin-right: 16px;
+    top: -4px;
+}
+
+.step-content--item {
+    display: none;
+    padding: 1em;
+}
+
+.step-content--item.active {
+    display: block;
 }
