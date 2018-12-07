@@ -32,12 +32,12 @@
 {% endblock %}
 {% block container %}
     {# Workflows #}
-
-    <h1 class="section-title mdc-typography--headline2">Workflows</h1>
+	
+	<h1 style="text-indent: 20px" class="section-title mdc-typography--headline2">Workflows</h1>
 	<div class="mdc-layout-grid">
 		<div class="mdc-layout-grid__inner">
 			{% for workflow in workflows %}
-				<div class="mdc-layout-grid__cell--span-3 mdc-card workflow-card">
+				<div class="mdc-layout-grid__cell--span-4 mdc-card workflow-card">
 					<a href="{% url 'action:index' wid=workflow.id %}" class="workflow-card__primary mdc-card__media randomColor mdc-ripple-surface" id="{{workflow.id}}" data-mdc-auto-init="MDCRipple">
 						<h2 class="worfklow-card__title mdc-typography--headline4">
 							{{workflow.name|capfirst}}
@@ -51,7 +51,7 @@
 					</div>
 					<div class="mdc-card__actions">
 						<div class="mdc-card__action-buttons">
-							<a href="{% url 'action:index' wid=workflow.id %}" class="mdc-button mdc-card__action mdc-card__action--button">Open</a>
+							<a style="margin-left: 15px" href="{% url 'action:index' wid=workflow.id %}" class="mdc-button mdc-card__action mdc-card__action--button">Open</a>
 						</div>
 						<div class="mdc-card__action-icons">
 							<button class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" title="More options">more_vert</button>
@@ -59,7 +59,7 @@
 					</div>
 				</div>
 			{% endfor %}
-			<a class="mdc-layout-grid__cell--span-3 workflow-card create-card mdc-card mdc-ripple-surface" href="{% url 'workflow:import' %}" data-mdc-auto-init="MDCRipple">
+			<a class="mdc-layout-grid__cell--span-4 workflow-card create-card mdc-card mdc-ripple-surface" href="{% url 'workflow:import' %}" data-mdc-auto-init="MDCRipple">
 				<div class="workflow-card__primary">
 					<h2 class="worfklow-card__title mdc-typography--headline4 align-center">
 						Create a new<br/> workflow
@@ -68,18 +68,17 @@
 			</a>
 		</div>
 	</div>
+	
 	{# Actions #}
-    <div>
-    	<h1 class="section-title mdc-typography--headline2">Recent Actions</h1>
-    </div>
-	<div class="mdc-layout-grid">
+    	<h1 style="text-indent: 20px" class="section-title mdc-typography--headline2">Recent Actions</h1>
+	<div style="margin-left: -25px" class="mdc-layout-grid">
 	    {% if nactions %}
 	    <div class="mdc-layout-grid__cell--span-12 mdc-card actions">
 			<ul class="mdc-list action-list" aria-orientation="vertical">
 				{% for action in actions %}
 					<a href="{% url 'action:edit' pk=action.id %}" class="action-item"><li class="mdc-list-item">
-						<span class="mdc-list-item__text">{{action.workflow__name}} - {{action.name}}</span>
-						<span class="mdc-list-item__meta action-item-date" title="{{action.modified}}">{{action.modified|date:"d/m/y"}}</span>
+						<span style="margin-left: 10px" class="mdc-list-item__text">{{action.workflow__name}} - {{action.name}}</span>
+						<span style="margin-right: 10px" class="mdc-list-item__meta action-item-date" title="{{action.modified}}">{{action.modified|date:"d/m/y"}}</span>
 					</li></a>
 				{% endfor %}
 			</ul>
