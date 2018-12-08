@@ -267,6 +267,8 @@ dt div.btn-group-vertical {
     height: 100%;
     text-align: center;
     width: var(--right-panel-width);
+    top: -0.5em;
+    position: relative;
 }
 
 .workflow-card__primary.mdc-card__media {
@@ -541,4 +543,8 @@ main .page-title {
 
 .step-content--item.active {
     display: block;
+}
+
+.logo span.item-text {
+    top: 0 !important;
 }

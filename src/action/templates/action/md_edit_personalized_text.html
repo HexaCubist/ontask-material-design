@@ -23,6 +23,7 @@
 </style>
 {% endblock extrahead %}
 {% block scripts %}
+  <script src="{% static 'action/js/action.js' %}?v={% ontask_version %}"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.3.0/fuse.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
   <script type="text/javascript">
@@ -129,7 +130,9 @@
           </div>
         </div>
         <div class="step-content">
-          <div class="step-content--item active" id="step-content-0">Step 1</div>
+          <div class="step-content--item active" id="step-content-0">
+            {% include 'action/includes/partial_filter_create_buttons.html' %}
+          </div>
           <div class="step-content--item" id="step-content-1">Step 2</div>
           <div class="step-content--item" id="step-content-2">Step 3</div>
         </div>
