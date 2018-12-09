@@ -18,6 +18,10 @@ urlpatterns = [
     url(r'^create/$',
         views_action.ActionCreateView.as_view(), name='create'),
 
+    # Create an action of type 0: in, 1: Out
+    url(r'^md/create/$',
+        views_action_md.ActionCreateView.as_view(), name='create'),
+
     # Edit action Out
     url(r'^(?P<pk>\d+)/edit/$', views_action.edit_action, name='edit'),
 

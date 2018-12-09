@@ -6,6 +6,7 @@
 
 // Auto Init
 window.mdc.autoInit();
+const dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
 
 // Navigation Effect
 $(function() {
@@ -22,9 +23,6 @@ $(function() {
 
     var url = window.location;
     var element = $('a.mdc-list-item').filter(function() {
-        console.log(this.href);
-        console.log(this.classList);
-        console.log(url);
         if (this.href == url) return true;
         return this.classList.contains("action-sub") && url.href.indexOf("/action/") > -1;
     }).addClass('mdc-list-item--activated');
@@ -68,7 +66,9 @@ var get_id_content = function() {
   return value;
 };
 var loadForm = function () {
-    $("#modal-item .modal-content").html("");
+    console.log("Opening form for element:");
+    console.log(this);
+    $(".mdc-dialog .dialog__surface").html("");
     var btn = $(this);
     if ($(this).is("[class*='disabled']")) {
       return;
@@ -83,10 +83,11 @@ var loadForm = function () {
       dataType: "json",
       data: data,
       beforeSend: function() {
-        $("#modal-item .modal-body").html("");
-        $("#modal-item").modal("show");
+        $(".mdc-dialog .dialog__surface").html("");
+        dialog.open();
       },
       success: function(data) {
+        console.log(data)
         if (data.form_is_valid) {
           if (data.html_redirect == "") {
             $("#div-spinner").show();
@@ -96,7 +97,7 @@ var loadForm = function () {
           }
           return;
         }
-        $("#modal-item .modal-content").html(data.html_form);
+        $(".mdc-dialog .mdc-dialog__surface").html(data.html_form);
         if (document.getElementById("id_formula") != null) {
           set_qbuilder('#id_formula', qbuilder_options);
         }
@@ -111,6 +112,8 @@ var loadForm = function () {
     });
 };
 var saveForm = function () {
+    console.log("Saving form for element:");
+    console.log(this);
     var form = $(this);
     if (document.getElementById("id_formula") != null) {
       formula = $("#builder").queryBuilder('getRules');

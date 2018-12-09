@@ -25,6 +25,7 @@
 {% block scripts %}
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.3.0/fuse.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+	<script src="{% static 'action/js/action_md.js' %}?v={% ontask_version %}"></script>
 	<script type="text/javascript">
 		function shadeColor2(color, percent) {   
 			var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
@@ -84,6 +85,10 @@
 			// Highlight the results
 			$(".action-list").mark(search, {"separateWordSearch": true, "acrossElements": true});
 		});
+
+		// Create Action
+		$(".js-create-action").click(loadForm);
+		$(".mdc-dialog").on("submit", ".js-action-create-form", saveForm);
 	</script>
 {% endblock %}
 {% block heading %}
@@ -109,7 +114,7 @@
 					</ul>
 				</div>
 			</div>
-			<button class="mdc-button mdc-button--raised action-add" data-mdc-auto-init="MDCRipple">
+			<button data-url="{% url 'action:create' %}" class="mdc-button mdc-button--raised action-add js-create-action" data-mdc-auto-init="MDCRipple">
 				<i class="material-icons mdc-button__icon">add</i>
 				New Action
 			</button> 
@@ -157,4 +162,27 @@
 		</ul>
     </div>
     {% endif %}
+    <div class="mdc-dialog"
+         role="alertdialog"
+         aria-modal="true"
+         aria-labelledby="dialog-title"
+         aria-describedby="dialog-content"
+         data-mdc-auto-init="MDCDialog">
+      <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+          <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
+          <h2 class="mdc-dialog__title" id="dialog-title"><!--
+         -->Dialog Title<!--
+       --></h2>
+          <div class="mdc-dialog__content" id="dialog-content">
+            Dialog body text goes here.
+          </div>
+          <footer class="mdc-dialog__actions">
+            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">No</button>
+            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">Yes</button>
+          </footer>
+        </div>
+      </div>
+      <div class="mdc-dialog__scrim"></div>
+    </div>
 {% endblock container %}

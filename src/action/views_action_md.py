@@ -53,6 +53,11 @@ from action.ops import (
 from .models import Action, Condition
 
 from .views_action import *
+from dataops.formula_evaluation import evaluate_node_sql, get_variables
+from logs.models import Log
+from ontask.permissions import is_instructor, UserIsInstructor
+from workflow.ops import get_workflow
+from .forms import ConditionForm, FilterForm
 
 @user_passes_test(is_instructor)
 def action_index(request, wid=None):
@@ -72,7 +77,7 @@ def action_index(request, wid=None):
     request.session.save()
 
     # Get the actions
-    actions = Action.objects.filter(workflow__id=workflow.id)
+    actions = Action.objects.filter(workflow__id=workflow.id).order_by('-modified')
 
     # Context to render the template
     context = {'has_table': ops.workflow_has_table(workflow), 'workflow': workflow}
@@ -175,7 +180,8 @@ def edit_action_out(request, workflow, action):
                'has_data': ops.workflow_has_table(action.workflow),
                'total_rows': workflow.nrows,
                'form': form,
-               'vis_scripts': PlotlyHandler.get_engine_scripts()
+               'vis_scripts': PlotlyHandler.get_engine_scripts(),
+               'workflow': workflow
                }
 
     # Template to use
@@ -222,3 +228,21 @@ def edit_action_out(request, workflow, action):
 
     return redirect('action:index')
 
+class ActionCreateView(UserIsInstructor, generic.TemplateView):
+    """
+    CBV to handle the create action form (very simple)
+    """
+    form_class = ActionForm
+    template_name = 'action/includes/md_partial_action_create.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        return save_action_form(request,
+                                form,
+                                self.template_name)
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        return save_action_form(request,
+                                form,
+                                self.template_name)

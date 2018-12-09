@@ -21,11 +21,20 @@
   }
 
 </style>
+<link rel="stylesheet" type="text/css" href="{% static "site/css/bootstrapbackport.css" %}">
+<link href="{% static 'site/css/query-builder.default.min.css' %}" rel="stylesheet">
+<link href="{% static 'site/font/fontawesome-embedded.css' %}" rel="stylesheet">
 {% endblock extrahead %}
 {% block scripts %}
   <script src="{% static 'action/js/action.js' %}?v={% ontask_version %}"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.3.0/fuse.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+  <script src="{% static 'site/js/query-builder.standalone.min.js' %}"></script>
+  <script type="text/javascript">
+    // Constants loaded from backend
+    const filterurl = {% if filter_condition %}"{% url 'action:edit_filter' filter_condition.id %}"{% else %}"{% url 'action:create_filter' action.id %}"{% endif %};
+  </script>
+  <script src="{% static 'action/js/action_md.js' %}?v={% ontask_version %}"></script>
   <script type="text/javascript">
     function shadeColor2(color, percent) {   
       var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
@@ -52,6 +61,33 @@
       let idx = event.detail.index;
       $(".step-content--item").removeClass("active");
       $("#step-content-" + idx).addClass("active");
+    });
+
+    var qbuilder_options = {
+      plugins: ['not-group'],
+      operators: ['equal', 'not_equal', 'less', 'less_or_equal',
+                  'greater', 'greater_or_equal', 'between', 'not_between',
+                  'begins_with', 'not_begins_with', 'contains', 'not_contains',
+                  'ends_with', 'not_ends_with', 'is_empty', 'is_not_empty'],
+      allow_empty: false,
+      filters: {{ query_builder_ops|safe }},
+      icons: {
+        add_group: 'icon-plus-squared',
+        add_rule: 'icon-plus-circled',
+        remove_group: 'icon-minus-squared',
+        remove_rule: 'icon-minus-circled',
+        error: 'icon-attention'
+      }
+    };
+    $(document).ready(function() {
+      if (document.getElementById("id_content") != null) {
+        initSummernote();
+      }
+    });
+    $("#id_content").on("summernote.paste",function(e,ne) {
+      var bufferText = ((ne.originalEvent || ne).clipboardData || window.clipboardData).getData('Text');
+      ne.preventDefault();
+      document.execCommand('insertText', false, bufferText);
     });
   </script>
 {% endblock %}
@@ -131,7 +167,8 @@
         </div>
         <div class="step-content">
           <div class="step-content--item active" id="step-content-0">
-            {% include 'action/includes/partial_filter_create_buttons.html' %}
+            {% include 'action/includes/md_partial_filter_create_buttons.html' %}
+            <div id="filter-edit"></div>
           </div>
           <div class="step-content--item" id="step-content-1">Step 2</div>
           <div class="step-content--item" id="step-content-2">Step 3</div>
