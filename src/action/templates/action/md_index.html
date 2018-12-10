@@ -27,6 +27,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
 	<script src="{% static 'action/js/action_md.js' %}?v={% ontask_version %}"></script>
 	<script type="text/javascript">
+        const dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
 		function shadeColor2(color, percent) {   
 			var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
 			return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
@@ -89,6 +90,7 @@
 		// Create Action
 		$(".js-create-action").click(loadForm);
 		$(".mdc-dialog").on("submit", ".js-action-create-form", saveForm);
+
 	</script>
 {% endblock %}
 {% block heading %}

@@ -6,7 +6,6 @@
 
 // Auto Init
 window.mdc.autoInit();
-const dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
 
 // Navigation Effect
 $(function() {
