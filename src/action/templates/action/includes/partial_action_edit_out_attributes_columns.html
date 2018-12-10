@@ -1,22 +1,26 @@
 {% load i18n %}
 <div id="attribute-names" style="margin-bottom:1ex;">
-  <div style="display: table-cell; padding-right: 1ex;">{% trans 'Insert:' %}</div>
   {% if attribute_names %}
-    <div style="display: table-cell; padding-right: 1ex;">
-        <select id="select-attribute-name">
-          <option value="">- {% trans 'Attribute' %} -</option>
+    <div class="mdc-select" data-mdc-auto-init="MDCSelect">
+        <i class="mdc-select__dropdown-icon"></i>
+        <select id="select-attribute-name" class="mdc-select__native-control">
+          <option value="" disabled selected></option>
           {% for attr in attribute_names %}
             <option value="{{ attr }}">{{ attr }}</option>
           {% endfor %}
         </select>
+        <label class="mdc-floating-label">{% trans 'Insert:' %} {% trans 'Attribute' %}</label>
+        <div class="mdc-line-ripple"></div>
     </div>
   {% endif %}
-  <div style="display: table-cell; padding-right: 1ex;">
-      <select id="select-column-name">
-        <option value="">- {% trans 'Column Value' %} -</option>
+  <div class="mdc-select" data-mdc-auto-init="MDCSelect">
+      <i class="mdc-select__dropdown-icon"></i>
+      <select id="select-column-name" class="mdc-select__native-control" style="width: 200px;">
+        <option value="" disabled selected></option>
         {% for colname in column_names %}
           <option value="{{ colname }}">{{ colname }}</option>
         {% endfor %}
       </select>
+      <label class="mdc-floating-label">{% trans 'Insert:' %} {% trans 'Column Value' %}</label>
   </div>
 </div>

@@ -24,12 +24,14 @@
 <link rel="stylesheet" type="text/css" href="{% static "site/css/bootstrapbackport.css" %}">
 <link href="{% static 'site/css/query-builder.default.min.css' %}" rel="stylesheet">
 <link href="{% static 'site/font/fontawesome-embedded.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.css" />
 {% endblock extrahead %}
 {% block scripts %}
 {#  <script src="{% static 'action/js/action.js' %}?v={% ontask_version %}"></script>#}
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.3.0/fuse.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
   <script src="{% static 'site/js/query-builder.standalone.min.js' %}"></script>
+  <script src="{% static 'summernote/summernote-lite.min.js' %}"></script>
   <script type="text/javascript">
     // Constants loaded from backend
     const filterurl = {% if filter_condition %}"{% url 'action:edit_filter' filter_condition.id %}"{% else %}"{% url 'action:create_filter' action.id %}"{% endif %};
@@ -170,8 +172,18 @@
             {% include 'action/includes/md_partial_filter_create_buttons.html' %}
             <div id="filter-edit"></div>
           </div>
-          <div class="step-content--item" id="step-content-1">Step 2</div>
-          <div class="step-content--item" id="step-content-2">Step 3</div>
+          <div class="step-content--item" id="step-content-1">
+          </div>
+          <div class="step-content--item" id="step-content-2">
+            <div id="html-editor" class="row">
+              {% include 'action/includes/partial_action_edit_out_attributes_columns.html' %}
+              <form action="" enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                {{ form|safe }}
+                {% include 'action/includes/partial_action_preview_done_buttons.html' %}
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>

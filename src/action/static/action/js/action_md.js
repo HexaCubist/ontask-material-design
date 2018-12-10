@@ -156,13 +156,13 @@ $(function () {
   // $("#action-in-editor").on("click", ".js-description-edit", loadForm);
   // $("#modal-item").on("submit", ".js-description-edit-form", saveForm);
 
-  // // Create filter
-  // $("#filter-set").on("click", ".js-filter-create", loadForm);
-  // $("#modal-item").on("submit", ".js-filter-create-form", saveForm);
+  // Create filter
+  $("#filter-set").on("click", ".js-filter-create", loadForm);
+  $("#filter-edit").on("submit", ".js-filter-create-form", saveForm);
 
-  // // Edit Filter
-  // $("#filter-set").on("click", ".js-filter-edit", loadForm);
-  // $("#modal-item").on("submit", ".js-filter-edit-form", saveForm);
+  // Edit Filter
+  $("#filter-set").on("click", ".js-filter-edit", loadForm);
+  $("#filter-edit").on("submit", ".js-filter-edit-form", saveForm);
 
   // // Delete Filter
   // $("#filter-set").on("click", ".js-filter-delete", loadForm);
@@ -183,18 +183,18 @@ $(function () {
   // $("#condition-set").on("click", ".js-condition-delete", loadForm);
   // $("#modal-item").on("submit", ".js-condition-delete-form", saveForm);
 
-  // // Insert condition blurb in the editor
-  // $("#condition-set").on("click", ".js-condition-insert",
-  //   insertConditionInContent);
+  // Insert condition blurb in the editor
+  $("#condition-set").on("click", ".js-condition-insert",
+    insertConditionInContent);
 
-  // // Insert attribute in content
-  // $("#attribute-names").on("change",
-  //                          "#select-attribute-name",
-  //                          insertAttributeInContent);
-  // // Insert attribute column in content
-  // $("#attribute-names").on("change",
-  //                          "#select-column-name",
-  //                          insertAttributeInContent);
+  // Insert attribute in content
+  $("#attribute-names").on("change",
+                           "#select-attribute-name",
+                           insertAttributeInContent);
+  // Insert attribute column in content
+  $("#attribute-names").on("change",
+                           "#select-column-name",
+                           insertAttributeInContent);
 
   // // Insert columns in action in
   // $("#column-names").on("change",
