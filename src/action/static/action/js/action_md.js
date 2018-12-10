@@ -276,6 +276,7 @@ $.ajax({
     if (document.getElementById("id_columns") != null) {
       set_element_select("#id_columns");
     }
+    window.mdc.autoInit();
   },
   error: function(jqXHR, textStatus, errorThrown) {
     $("#div-spinner").show();

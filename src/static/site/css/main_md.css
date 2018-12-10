@@ -647,3 +647,15 @@ main .page-title {
 .rule-filter-container, .rule-operator-container {
     position: relative;
 }
+
+#filter-edit input[type=text] {
+    width: 100%;
+    display: block;
+}
+
+#filter-edit .mdc-text-field {
+    width: calc(50% - 10px);
+    margin: 0 4px;
+    margin-bottom: 10px;
+    min-width: 300px;
+}

@@ -5,7 +5,7 @@
         {% if filter_condition %}
             {{ filter_condition.name }} <small>{% blocktrans with n=selected_rows tot=total_rows count counter=selected_rows %}({{ n }} learner of {{ tot }}){% plural %}({{ n }} learners of {{ tot }}){% endblocktrans %}</small>
         {% else %}
-            {% trans 'Filter learners' %} {% blocktrans with n=selected_rows tot=total_rows count counter=selected_rows %}({{ n }} learner of {{ tot }}){% plural %}({{ n }} learners of {{ tot }}){% endblocktrans %}
+            {% trans 'Filter learners' %} {% blocktrans with n=selected_rows tot=total_rows count counter=selected_rows %}({{ tot }} learner of {{ tot }}){% plural %}({{ tot }} learners of {{ tot }}){% endblocktrans %}
         {% endif %}
     </h4>
     <div id="filter-set">

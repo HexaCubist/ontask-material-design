@@ -403,6 +403,6 @@ mimetypes.add_type("image/svg+xml", ".svg", True)
 mimetypes.add_type("image/svg+xml", ".svgz", True)
 
 
-MATERIAL_CSS = "https://unpkg.com/material-components-web@0.41.1/dist/material-components-web.min.css"
+MATERIAL_CSS = "https://unpkg.com/material-components-web@0.42.0/dist/material-components-web.min.css"
 
-MATERIAL_JS = "https://unpkg.com/material-components-web@0.41.1/dist/material-components-web.min.js"
+MATERIAL_JS = "https://unpkg.com/material-components-web@0.42.0/dist/material-components-web.min.js"
