@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Merriweather:700i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link href="{% static "site/font/icons-outline.css" %}" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/material-components-web@0.41.1/dist/material-components-web.min.css">
+    <link rel="stylesheet" href="{{ MATERIAL_CSS }}">
     <!-- Custom styles for this site -->
     {% block styles %}
     {% endblock styles %}
@@ -70,7 +70,7 @@
       {% endblock %}
       {% block timeout %}
       {% endblock timeout %}
-      <script type="text/javascript" src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+      <script type="text/javascript" src="{{ MATERIAL_JS }}"></script>
       <script src="{% static 'site/js/initial.js' %}?v={% ontask_version %}"></script>
       <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
       <script src="{% static 'site/js/site_md.js' %}?v={% ontask_version %}"></script>

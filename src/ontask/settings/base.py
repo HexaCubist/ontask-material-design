@@ -131,6 +131,8 @@ INSTALLED_APPS = (
     'action.apps.ActionConfig',
     'logs.apps.LogsConfig',
     'scheduler.apps.SchedulerConfig',
+
+    'material_widgets.apps.MaterialWidgetsConfig'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -399,3 +401,8 @@ CELERY_BEAT_SCHEDULE = {
 # Correct mimetypes for svg files
 mimetypes.add_type("image/svg+xml", ".svg", True)
 mimetypes.add_type("image/svg+xml", ".svgz", True)
+
+
+MATERIAL_CSS = "https://unpkg.com/material-components-web@0.41.1/dist/material-components-web.min.css"
+
+MATERIAL_JS = "https://unpkg.com/material-components-web@0.41.1/dist/material-components-web.min.js"

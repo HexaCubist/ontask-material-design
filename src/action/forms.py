@@ -15,6 +15,7 @@ from dataops.pandas_db import execute_select_on_table, get_table_cursor, \
 from ontask import ontask_prefs, is_legal_name
 from ontask.forms import column_to_field, dateTimeOptions, RestrictedFileField
 from .models import Action, Condition
+from material_widgets.forms import MaterialForm, MaterialModelForm
 
 # Field prefix to use in forms to avoid using column names (they are given by
 # the user and may pose a problem (injection bugs)
@@ -23,7 +24,7 @@ field_prefix = '___ontask___select_'
 participant_re = re.compile('^Participant \d+$')
 
 
-class ActionUpdateForm(forms.ModelForm):
+class ActionUpdateForm(MaterialModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop(str('workflow_user'), None)
         self.workflow = kwargs.pop(str('action_workflow'), None)

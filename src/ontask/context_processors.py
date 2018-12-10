@@ -15,5 +15,7 @@ def conf_to_context(request):
 
     return {'ONTASK_HELP_URL': getattr(settings, 'ONTASK_HELP_URL', ''),
             'ONTASK_TIMEOUT': getattr(settings, 'SESSION_COOKIE_AGE', 1800),
-            'ONTASK_BASE_URL': getattr(settings, 'BASE_URL', '') + '/'}
+            'ONTASK_BASE_URL': getattr(settings, 'BASE_URL', '') + '/',
+            'MATERIAL_CSS': getattr(settings, 'MATERIAL_CSS', ''),
+            'MATERIAL_JS': getattr(settings, 'MATERIAL_JS', '')}
 
