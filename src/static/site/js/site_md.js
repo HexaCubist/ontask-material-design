@@ -97,6 +97,7 @@ var loadForm = function () {
           return;
         }
         $(".mdc-dialog .mdc-dialog__surface").html(data.html_form);
+        window.mdc.autoInit();
         if (document.getElementById("id_formula") != null) {
           set_qbuilder('#id_formula', qbuilder_options);
         }

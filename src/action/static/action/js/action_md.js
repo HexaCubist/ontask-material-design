@@ -97,23 +97,21 @@ var loadFormPost = function () {
       type: 'post',
       dataType: 'json',
       beforeSend: function() {
-        $(".modal-body").html("");
-        $("#modal-item").modal("show");
+        $(".mdc-dialog .mdc-dialog__surface").html("");
+        dialog.open();
       },
       success: function(data) {
         if (data.form_is_valid) {
           if (data.html_redirect == "") {
-            $('#div-spinner').show();
             window.location.reload(true);
           } else {
             location.href = data.html_redirect;
           }
           return;
         }
-        $("#modal-item .modal-content").html(data.html_form);
+        $(".mdc-dialog .mdc-dialog__surface").html(data.html_form);
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        $('#div-spinner').show();
         location.reload(true);
       }
     });
@@ -212,13 +210,13 @@ $(function () {
   //                      toggleShuffleQuestion);
 
   // // Preview
-  // $("#html-editor").on("click", ".js-action-preview", loadFormPost);
-  // $("#email-action-request-data").on("click", ".js-email-preview", loadForm);
-  // $("#zip-action-request-data").on("click", ".js-zip-preview", loadForm);
-  // $("#json-action-request-data").on("click", ".js-json-preview", loadForm);
-  // $("#action-in-editor").on("click", ".js-action-preview", loadForm);
-  // $(".modal-content").on("click", ".js-action-preview-nxt", loadForm);
-  // $(".modal-content").on("click", ".js-action-preview-prv", loadForm);
+  $("#html-editor").on("click", ".js-action-preview", loadFormPost);
+  $("#email-action-request-data").on("click", ".js-email-preview", loadForm);
+  $("#zip-action-request-data").on("click", ".js-zip-preview", loadForm);
+  $("#json-action-request-data").on("click", ".js-json-preview", loadForm);
+  $("#action-in-editor").on("click", ".js-action-preview", loadForm);
+  $(".mdc-dialog").on("click", ".js-action-preview-nxt", loadForm);
+  $(".mdc-dialog").on("click", ".js-action-preview-prv", loadForm);
 
   // // Show URL
   // $("#action-table").on("click", ".js-action-showurl", loadForm);

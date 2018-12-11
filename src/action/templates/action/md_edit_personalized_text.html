@@ -38,6 +38,7 @@
   </script>
   <script src="{% static 'action/js/action_md.js' %}?v={% ontask_version %}"></script>
   <script type="text/javascript">
+    const dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
     function shadeColor2(color, percent) {   
       var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
       return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
@@ -57,7 +58,6 @@
       }
     });
 
-    const createmenu = new mdc.menu.MDCMenu(document.querySelector('.createmenu'));
 
     $(".steps-tab-bar").on("MDCTabBar:activated", event => {
       let idx = event.detail.index;
@@ -126,28 +126,6 @@
       Edit {{ action.name }}
       <small>{{ workflow.name }}</small></small>
     </h1>
-    <div class="page-title-menu">
-      <div class="manage-data mdc-menu-surface--anchor">
-        <button class="mdc-button" data-mdc-auto-init="MDCRipple" onclick="createmenu.open = !createmenu.open">
-          <i class="material-icons mdc-button__icon">arrow_drop_down</i>
-          Manage Data
-        </button>
-        <div class="mdc-menu mdc-menu-surface createmenu" tabindex="-1">
-          <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-            <li class="mdc-list-item" role="menuitem">
-              <span class="mdc-list-item__text">A Menu Item</span>
-            </li>
-            <li class="mdc-list-item" role="menuitem">
-              <span class="mdc-list-item__text">Another Menu Item</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <button class="mdc-button mdc-button--raised action-add" data-mdc-auto-init="MDCRipple">
-        <i class="material-icons mdc-button__icon">add</i>
-        New Action
-      </button> 
-    </div>
   </div>
 {% endblock heading %}
 {% block container %}
@@ -248,11 +226,46 @@
               <form action="" enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
                 {{ form|safe }}
-                {% include 'action/includes/partial_action_preview_done_buttons.html' %}
+                  <button type="button"
+                          class="mdc-button mdc-button--raised js-action-preview {% if selected_rows == 0 %}disabled{% endif %}"
+                          style="margin-right:2ex;"
+                          data-url="{% url 'action:preview' action.id 1 %}"
+                          data-toggle="tooltip"
+                      title="{% trans 'See how is the content shown to each learner' %}">
+                    <span class="glyphicon glyphicon-eye-open"></span> {% trans 'Preview' %}
+                  </button>
+                  <button type="submit" name="Submit" value="Submit"
+                          class="mdc-button mdc-button--raised spin"
+                          data-toggle="tooltip"
+                          title="{% trans 'Save and go back' %}">
+                    <span class="glyphicon glyphicon-ok"></span> {% trans 'Save' %}</button>
               </form>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="mdc-dialog"
+         id="preview-window"
+         role="alertdialog"
+         aria-modal="true"
+         aria-labelledby="dialog-title"
+         aria-describedby="dialog-content"
+         data-mdc-auto-init="MDCDialog">
+      <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+          <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
+          <h2 class="mdc-dialog__title" id="dialog-title"><!--
+         -->Dialog Title<!--
+       --></h2>
+          <div class="mdc-dialog__content" id="dialog-content">
+            Dialog body text goes here.
+          </div>
+          <footer class="mdc-dialog__actions">
+            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">No</button>
+            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">Yes</button>
+          </footer>
+        </div>
+      </div>
+      <div class="mdc-dialog__scrim"></div>
 {% endblock container %}

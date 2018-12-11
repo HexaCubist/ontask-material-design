@@ -226,7 +226,7 @@ def edit_action_out(request, workflow, action):
 
     action.save()
 
-    return redirect('action:index')
+    return render(request, template, context=context)
 
 class ActionCreateView(UserIsInstructor, generic.TemplateView):
     """

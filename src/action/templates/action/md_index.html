@@ -25,7 +25,7 @@
 {% block scripts %}
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.3.0/fuse.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
-	<script src="{% static 'action/js/action_md.js' %}?v={% ontask_version %}"></script>
+{#	<script src="{% static 'action/js/action_md.js' %}?v={% ontask_version %}"></script>#}
 	<script type="text/javascript">
         const dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
 		function shadeColor2(color, percent) {   
@@ -91,6 +91,9 @@
 		$(".js-create-action").click(loadForm);
 		$(".mdc-dialog").on("submit", ".js-action-create-form", saveForm);
 
+        // Delete Workflow
+        $(".createmenu").on("click", ".js-workflow-delete", loadForm);
+        $(".mdc-dialog").on("submit", ".js-workflow-delete-form", saveForm);
 	</script>
 {% endblock %}
 {% block heading %}
@@ -107,11 +110,9 @@
 				</button>
 				<div class="mdc-menu mdc-menu-surface createmenu" tabindex="-1">
 					<ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
-						<li class="mdc-list-item" role="menuitem">
-							<span class="mdc-list-item__text">A Menu Item</span>
-						</li>
-						<li class="mdc-list-item" role="menuitem">
-							<span class="mdc-list-item__text">Another Menu Item</span>
+						<li class="mdc-list-item js-workflow-delete" role="menuitem" data-url="{% url 'workflow:delete' workflow.id %}">
+                            <span class="mdc-list-item__graphic material-icons" aria-hidden="true">delete_forever</span>
+							<span class="mdc-list-item__text">Delete Workflow</span>
 						</li>
 					</ul>
 				</div>

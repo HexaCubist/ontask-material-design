@@ -683,3 +683,29 @@ main .page-title {
     margin-top: 0;
     margin-bottom: 0.5em;
 }
+
+.mdc-dialog #preview-body {
+    border: none !important;
+    background: #ffffff;
+    margin: 2em 3em !important;
+    padding: 0.5em 1em;
+    color: black;
+}
+
+#preview-window .mdc-dialog__content {
+    background: #dcdcdc;
+    padding: 0;
+    box-shadow: inset 0 -5px 5px -5px #00000026, inset 0 5px 5px -5px #00000026;
+    max-height: 50vh;
+}
+
+#preview-variables {
+    color: #353535;
+    border: none !important;
+    padding: 1em;
+    background: #fff6ab;
+}
+
+.partial-form-field {
+    margin-top: 1em;
+}

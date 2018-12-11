@@ -1,4 +1,4 @@
-<div class="mdc-select mdc-select--fullwidth mdc-select--outlined">
+<div class="mdc-select mdc-select--fullwidth mdc-select--outlined" data-mdc-auto-init="MDCSelect">
   <i class="mdc-select__dropdown-icon"></i>
 {% comment %}
   <div role="listbox" tabindex="0"{% if widget.attrs.id %} data-id="{{ widget.attrs.id }}"{% endif %}{% include "material_widgets/widgets/material_attrs.html" %}>
@@ -25,11 +25,12 @@
   </div>
 {% endcomment %}
   {% include "material_widgets/widgets/material_select_nojs.html" with is_multiwidget=True %}
-   <div class="mdc-notched-outline">
-     <div class="mdc-notched-outline__leading"></div>
-     <div class="mdc-notched-outline__notch">
-        {% if widget.label and not is_multiwidget %}<label class="mdc-floating-label mdc-floating-label--float-above"{% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}{% if widget.help_text %} title="{{ widget.help_text }}"{% endif %}>{{ widget.label }}</label>{% endif %}
+     <div class="mdc-notched-outline">
+        <div class="mdc-notched-outline__leading"></div>
+        <div class="mdc-notched-outline__notch">
+            {% if widget.label and not is_multiwidget %}<label class="mdc-floating-label mdc-floating-label--float-above"{% if widget.attrs.id %} for="{{ widget.attrs.id }}"{% endif %}{% if widget.help_text %} title="{{ widget.help_text }}"{% endif %}>{{ widget.label }}</label>{% endif %}
+        </div>
+        <div class="mdc-notched-outline__trailing"></div>
      </div>
-     <div class="mdc-notched-outline__trailing"></div>
    </div>
 </div>

@@ -1,21 +1,16 @@
 {% load i18n %}
 <form method="post" action="{% url 'workflow:delete' workflow.id %}" class="js-workflow-delete-form">
   {% csrf_token %}
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <h4 class="modal-title">{% trans 'Confirm workflow deletion' %}</h4>
-  </div>
-  <div class="modal-body">
+  <h4 class="mdc-dialog__title">{% trans 'Confirm workflow deletion' %}</h4>
+  <div class="mdc-dialog__content">
     <p class="lead">{% blocktrans with n=workflow.name %}Are you sure you want to delete the workflow <strong>{{ n }}</strong>?{% endblocktrans %}</p>
     <p>{% trans 'This operation will also remove all the conditions and actions attached to it.' %}</p>
   </div>
-  <div class="modal-footer" style="text-align: center;">
-    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Cancel' %}
+  <footer class="mdc-dialog__actions">
+    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">{% trans 'Cancel' %}
     </button>
-    <button type="submit" class="btn btn-danger">
-      <span class="glyphicon glyphicon-trash"></span> {% trans 'Delete workflow' %}</button>
-  </div>
+    <button type="submit" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
+      <i class="material-icons mdc-button__icon" aria-hidden="true">delete_forever</i> {% trans 'Delete workflow' %}</button>
+  </footer>
 </form>
 
