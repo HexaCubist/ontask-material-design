@@ -709,3 +709,8 @@ main .page-title {
 .partial-form-field {
     margin-top: 1em;
 }
+
+.mdc-list .mdc-list-item__graphic {
+    margin-right: 10px;
+    margin-left: 0;
+}

@@ -205,6 +205,12 @@
                 <div class="mdc-layout-grid__inner">
                     <div class="mdc-layout-grid__cell">
                         <ul class="mdc-list" id="condition-list">
+                        <li class="mdc-list-item js-condition-create" role="option" data-url="{% url 'action:create_condition' action.id %}">
+                            <span class="mdc-list-item__graphic material-icons" aria-hidden="true">add</span>
+                            <span class="mdc-list-item__text">
+                                Create a new Condition
+                            </span>
+                        </li>
                           {% for condition in conditions %}
                           <li class="mdc-list-item{% if forloop.first %} mdc-list-item--selected" aria-selected="true"{% else %}"{% endif %} tabindex="0" role="option" data-url="{% url 'action:edit_condition' condition.id %}" title="{% blocktrans with n=condition.n_rows_selected %}Edit the condition ({{ n }} rows satisfy this condition){% endblocktrans %}">
                             <span class="mdc-list-item__text">

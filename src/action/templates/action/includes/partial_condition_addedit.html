@@ -1,4 +1,5 @@
 {% load i18n %}
+{% if condition_id != -1 %}
 <form method="post" action="{% url 'action:delete_condition' condition_id %}" class="js-condition-delete-form">
     {% csrf_token %}
     <button type="submit" class="mdc-button pull-right mdc-button__danger">
@@ -6,10 +7,11 @@
         Delete Condition
     </button>
 </form>
+{% endif %}
 <form method="post"
   {% if add %}
     action="{% url 'action:create_condition' action_id %}" 
-    class="js-condition-create-form"
+    class="js-condition-edit-form"
   {% else %}
     action="{% url 'action:edit_condition' condition_id %}" 
     class="js-condition-edit-form"
