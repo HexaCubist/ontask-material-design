@@ -166,22 +166,22 @@ $(function () {
 
   // // Delete Filter
   // $("#filter-set").on("click", ".js-filter-delete", loadForm);
-  // $("#modal-item").on("submit", ".js-filter-delete-form", saveForm);
+  $("#step-content-0").on("submit", ".js-filter-delete-form", saveForm);
 
   // // Create Condition
   // $("#condition-set-header").on("click", ".js-condition-create", loadForm);
   // $("#modal-item").on("submit", ".js-condition-create-form", saveForm);
 
-  // // Edit Condition
+  // Edit Condition
   // $("#condition-set").on("click", ".js-condition-edit", loadForm);
-  // $("#modal-item").on("submit", ".js-condition-edit-form", saveForm);
+  $("#condition-info").on("submit", ".js-condition-edit-form", saveForm);
 
   // // Clone Condition
   // $("#condition-set").on("click", ".js-condition-clone", saveActionText);
 
   // // Delete Condition
   // $("#condition-set").on("click", ".js-condition-delete", loadForm);
-  // $("#modal-item").on("submit", ".js-condition-delete-form", saveForm);
+  $("#condition-info").on("submit", ".js-condition-delete-form", saveForm);
 
   // Insert condition blurb in the editor
   $("#condition-set").on("click", ".js-condition-insert",
@@ -262,7 +262,6 @@ $.ajax({
   success: function(data) {
     if (data.form_is_valid) {
       if (data.html_redirect == "") {
-        $("#div-spinner").show();
         window.location.reload(true);
       } else {
         location.href = data.html_redirect;
@@ -279,7 +278,44 @@ $.ajax({
     window.mdc.autoInit();
   },
   error: function(jqXHR, textStatus, errorThrown) {
-    $("#div-spinner").show();
     location.reload(true);
   }
 });
+
+var loadcondition = function(url=$("#condition-list .mdc-list-item--selected").data("url")) {
+  console.log(url)
+  $("#condition-info").html("");
+  data = {}
+  $.ajax({
+    url: url,
+    type: "get",
+    dataType: "json",
+    data: data,
+    beforeSend: function () {
+      $("#condition-info").html("");
+    },
+    success: function (data) {
+      if (data.form_is_valid) {
+        if (data.html_redirect == "") {
+          window.location.reload(true);
+        } else {
+          location.href = data.html_redirect;
+        }
+        return;
+      }
+      $("#condition-info").html(data.html_form);
+      if (document.querySelector("#condition-info #id_formula") != null) {
+        set_qbuilder('#condition-info #id_formula', qbuilder_options, builder_element="#condition-info #builder");
+      }
+      if (document.getElementById("id_columns") != null) {
+        set_element_select("#id_columns");
+      }
+      window.mdc.autoInit();
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(jqXHR, textStatus, errorThrown);
+      return;
+      location.reload(true);
+    }
+  });
+}

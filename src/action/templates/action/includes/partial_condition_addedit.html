@@ -1,5 +1,12 @@
 {% load i18n %}
-<form method="post" 
+<form method="post" action="{% url 'action:delete_condition' condition_id %}" class="js-condition-delete-form">
+    {% csrf_token %}
+    <button type="submit" class="mdc-button pull-right mdc-button__danger">
+        <i class="material-icons mdc-button__icon" aria-hidden="true">delete_forever</i>
+        Delete Condition
+    </button>
+</form>
+<form method="post"
   {% if add %}
     action="{% url 'action:create_condition' action_id %}" 
     class="js-condition-create-form"
@@ -8,29 +15,20 @@
     class="js-condition-edit-form"
   {% endif %}>
   {% csrf_token %}
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" arial-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <h4 class="modal-title">
+    <h4 class="mdc-typography--headline4">
      {% if add %}
        {% trans 'Create condition' %}
      {% else %}
        {% trans 'Edit condition' %}
      {% endif %}</h4>
-  </div>
   <div class="modal-body">
     {% include 'action/includes/partial_form_fields.html' %}
     <div id="builder"></div>
   </div>
-  <div class="modal-footer" style="text-align: center;">
-    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Cancel' %}
-    </button>
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="mdc-button mdc-button--raised pull-right">
       <span class="glyphicon glyphicon-ok"></span> 
       {% if add %}
         {% trans 'Create condition' %}
       {% else %}
         {% trans 'Update condition' %}{% endif %}</button>
-  </div>
 </form>

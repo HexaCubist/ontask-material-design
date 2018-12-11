@@ -28,12 +28,12 @@ $(function() {
 });
 
 
-var set_qbuilder = function (element_id, qbuilder_options) {
+var set_qbuilder = function (element_id, qbuilder_options, builder_element="#builder") {
     var id_formula_value = $(element_id).val();
     if (id_formula_value != "null" && id_formula_value != "{}") {
       qbuilder_options["rules"] = JSON.parse(id_formula_value);
     }
-    $("#builder").queryBuilder(qbuilder_options);
+    $(builder_element).queryBuilder(qbuilder_options);
 };
 var set_element_select = function(element_id) {
   $(element_id).searchableOptionList({
@@ -114,20 +114,20 @@ var saveForm = function () {
     console.log("Saving form for element:");
     console.log(this);
     var form = $(this);
-    if (document.getElementById("id_formula") != null) {
-      formula = $("#builder").queryBuilder('getRules');
+    if (this.querySelector("#id_formula") != null) {
+      formula = $(this.querySelector("#builder")).queryBuilder('getRules');
       if (formula == null || !formula['valid']) {
         return false;
       }
       f_text = JSON.stringify(formula, undefined, 2);
-      $("#id_formula").val(f_text);
+      $(this.querySelector("#id_formula")).val(f_text);
     }
     var data = form.serializeArray();
-    if (document.getElementById("id_content") != null) {
-      value = get_id_content();
+    if (this.querySelector("#id_content") != null) {
+      value = get_id_content(elem=this.querySelector("#id_content"));
       data.push({"name": "action_content", "value": value});
     }
-    $("#modal-item .modal-content").html("");
+    // $(this).parent().html("");
     $.ajax({
       url: form.attr("action"),
       data: data,
@@ -143,11 +143,11 @@ var saveForm = function () {
           }
         }
         else {
-          $("#modal-item .modal-content").html(data.html_form);
-          if (document.getElementById("id_formula") != null) {
+          // $("#modal-item .modal-content").html(data.html_form);
+          if (this.querySelector("#id_formula") != null) {
             set_qbuilder('#id_formula', qbuilder_options);
           }
-          if (document.getElementById("id_columns") != null) {
+          if (this.querySelector("#id_columns") != null) {
             set_element_select("#id_columns");
           }
         }

@@ -199,4 +199,5 @@ urlpatterns += [
         name='index'),
     # Edit action Out
     url(r'^md/(?P<pk>\d+)/edit/$', views_action_md.edit_action, name='edit'),
+    url(r'^md/(?P<pk>\d+)/edit/$', views_action_md.edit_action, name='edit'),
 ]

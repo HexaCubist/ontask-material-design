@@ -1,7 +1,7 @@
 {% load i18n %}
 <div id="attribute-names" style="margin-bottom:1ex;">
   {% if attribute_names %}
-    <div class="mdc-select" data-mdc-auto-init="MDCSelect">
+    <div class="mdc-select mdc-select--outlined" data-mdc-auto-init="MDCSelect">
         <i class="mdc-select__dropdown-icon"></i>
         <select id="select-attribute-name" class="mdc-select__native-control">
           <option value="" disabled selected></option>
@@ -9,11 +9,16 @@
             <option value="{{ attr }}">{{ attr }}</option>
           {% endfor %}
         </select>
-        <label class="mdc-floating-label">{% trans 'Insert:' %} {% trans 'Attribute' %}</label>
-        <div class="mdc-line-ripple"></div>
+        <div class="mdc-notched-outline">
+            <div class="mdc-notched-outline__leading"></div>
+            <div class="mdc-notched-outline__notch">
+                <label class="mdc-floating-label">{% trans 'Insert:' %} {% trans 'Attribute' %}</label>
+            </div>
+        <div class="mdc-notched-outline__trailing"></div>
+        </div>
     </div>
   {% endif %}
-  <div class="mdc-select" data-mdc-auto-init="MDCSelect">
+  <div class="mdc-select mdc-select--outlined" data-mdc-auto-init="MDCSelect">
       <i class="mdc-select__dropdown-icon"></i>
       <select id="select-column-name" class="mdc-select__native-control" style="width: 200px;">
         <option value="" disabled selected></option>
@@ -21,6 +26,12 @@
           <option value="{{ colname }}">{{ colname }}</option>
         {% endfor %}
       </select>
-      <label class="mdc-floating-label">{% trans 'Insert:' %} {% trans 'Column Value' %}</label>
+      <div class="mdc-notched-outline">
+          <div class="mdc-notched-outline__leading"></div>
+          <div class="mdc-notched-outline__notch">
+            <label class="mdc-floating-label">{% trans 'Insert:' %} {% trans 'Column Value' %}</label>
+          </div>
+      <div class="mdc-notched-outline__trailing"></div>
+      </div>
   </div>
 </div>

@@ -129,7 +129,11 @@ main {
   display: none;
 }
 
-.query-builder .pull-right {
+.pull-left{
+  float: left !important;
+}
+
+.pull-right {
   float: right !important;
 }
 
@@ -658,4 +662,24 @@ main .page-title {
     margin: 0 4px;
     margin-bottom: 10px;
     min-width: 300px;
+}
+
+#condition-list {
+    height: 600px;
+    overflow-y: scroll;
+}
+
+.mdc-button.mdc-button__danger {
+    color: #F44336;
+    background: #f4433626;
+}
+
+#filter-edit {
+    clear: both;
+    padding-top: 1em;
+}
+
+.mdc-typography--headlinetop {
+    margin-top: 0;
+    margin-bottom: 0.5em;
 }

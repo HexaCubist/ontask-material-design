@@ -91,6 +91,30 @@
       ne.preventDefault();
       document.execCommand('insertText', false, bufferText);
     });
+
+    const steps = new mdc.tabBar.MDCTabBar(document.querySelector(".mdc-tab-bar"));
+    var step;
+    if(window.location.hash && window.location.hash.match(/step(\d)/)) {
+        step = window.location.hash.match(/step(\d)/)[1];
+        steps.activateTab(parseInt(step)-1)
+    }
+    document.querySelector(".mdc-tab-bar").addEventListener("MDCTabBar:activated", (e) => {
+        console.log(e);
+        step = e.detail.index;
+        window.location.hash = "#step" + (step + 1).toString();
+    })
+
+    const list = new mdc.list.MDCList(document.getElementById('condition-list'));
+    list.singleSelection = true;
+    if ($("#condition-list .mdc-list-item--selected").length) {
+        loadcondition();
+    } else {
+        createcondition();
+    }
+    $("#condition-list .mdc-list-item").on("click", function(){
+        if($(this).data("url") == $("#condition-list .mdc-list-item--selected").data("url")) return;
+        loadcondition(url=$(this).data("url"));
+    });
   </script>
 {% endblock %}
 {% block heading %}
@@ -169,10 +193,54 @@
         </div>
         <div class="step-content">
           <div class="step-content--item active" id="step-content-0">
-            {% include 'action/includes/md_partial_filter_create_buttons.html' %}
+            {% if filter_condition %}
+                <form method="post" action="{% url 'action:delete_filter' filter_condition.id %}" class="js-filter-delete-form">
+                  {% csrf_token %}
+                    <button type="submit" class="mdc-button pull-right mdc-button__danger">
+                        <i class="material-icons mdc-button__icon" aria-hidden="true">delete_forever</i>
+                        Delete Fitler
+                    </button>
+                </form>
+            {% endif %}
+            <h4 class="mdc-typography--headline4 mdc-typography--headlinetop">
+                {% if filter_condition %}
+                    {{ filter_condition.name }} <small>{% blocktrans with n=selected_rows tot=total_rows count counter=selected_rows %}({{ n }} learner of {{ tot }}){% plural %}({{ n }} learners of {{ tot }}){% endblocktrans %}</small>
+                {% else %}
+                    {% trans 'Filter learners' %} {% blocktrans with n=selected_rows tot=total_rows count counter=selected_rows %}({{ tot }} learner of {{ tot }}){% plural %}({{ tot }} learners of {{ tot }}){% endblocktrans %}
+                {% endif %}
+            </h4>
+            {% if filter_condition %}
+              {% if selected_rows == 0 %}
+                <div class="alert-danger">
+                  <p>{% trans 'The filter excludes all learners!' %}</p>
+                </div>
+              {% endif %}
+            {% else %}
+              <div class="alert-info">
+                <p>{% trans 'All learners considered for this action.' %}</p>
+              </div>
+            {% endif %}
             <div id="filter-edit"></div>
           </div>
           <div class="step-content--item" id="step-content-1">
+            <div class="mdc-layout-grid">
+                <div class="mdc-layout-grid__inner">
+                    <div class="mdc-layout-grid__cell">
+                        <ul class="mdc-list" id="condition-list">
+                          {% for condition in conditions %}
+                          <li class="mdc-list-item{% if forloop.first %} mdc-list-item--selected" aria-selected="true"{% else %}"{% endif %} tabindex="0" role="option" data-url="{% url 'action:edit_condition' condition.id %}" title="{% blocktrans with n=condition.n_rows_selected %}Edit the condition ({{ n }} rows satisfy this condition){% endblocktrans %}">
+                            <span class="mdc-list-item__text">
+                                <strong>{{ condition.name }}</strong> {% blocktrans with n=condition.n_rows_selected count counter=condition.n_rows_selected %}({{ n }} learner){% plural %}({{ n }} learners){% endblocktrans %}
+                            </span>
+                          </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8">
+                        <div id="condition-info"></div>
+                    </div>
+                </div>
+                </div>
           </div>
           <div class="step-content--item" id="step-content-2">
             <div id="html-editor" class="row">
