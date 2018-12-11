@@ -109,7 +109,7 @@
     if ($("#condition-list .mdc-list-item--selected").length) {
         loadcondition();
     } else {
-        createcondition();
+        loadcondition(url=$("#condition-list .js-condition-create").data("url"));
     }
     $("#condition-list .mdc-list-item").on("click", function(){
         if($(this).data("url") == $("#condition-list .mdc-list-item--selected").data("url")) return;
